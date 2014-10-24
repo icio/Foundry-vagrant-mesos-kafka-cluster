@@ -1,0 +1,21 @@
+---
+- name: Install required docker dependency
+  command: pip install docker-py
+
+- name: Create fluent temporary directory
+  file: path={{fluentd.dir}} state=directory
+
+- name: Add fluentd.conf
+  template: src=td-agent.conf.j2 dest={{fluentd.dir}}/td-agent.conf
+  with_dict: logentries
+
+- name: Add Dockerfile
+  template: src=Dockerfile.j2 dest={{fluentd.dir}}/Dockerfile
+  with_dict: fluentd
+
+- name: Build fluentd image
+  docker_image: >
+    name={{fluentd.docker.name}}
+    tag={{fluentd.docker.tag}}
+    path={{fluentd.dir}}
+    state=build

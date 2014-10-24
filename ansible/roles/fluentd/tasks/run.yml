@@ -1,0 +1,6 @@
+---
+- name: run fluentd inside docker
+  docker: >
+    image=fluentd
+    volumes=/tmp/mesos/slaves/:/tmp/mesos/slaves/
+    command="--config /etc/td-agent/conf/td-agent.conf"

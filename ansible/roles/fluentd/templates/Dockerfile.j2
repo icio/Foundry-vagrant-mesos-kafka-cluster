@@ -1,0 +1,13 @@
+FROM ubuntu:14.04
+
+RUN apt-get update && sudo apt-get install -y -q curl libcurl4-openssl-dev ruby ruby-dev make
+RUN curl -L http://toolbelt.treasuredata.com/sh/install-ubuntu-trusty-td-agent2.sh | sh
+
+{% for plugin in fluentd.plugins %}
+RUN /opt/td-agent/embedded/bin/fluent-gem install {{plugin}}
+{% endfor %}
+
+ADD td-agent.conf /etc/td-agent/conf/td-agent.conf
+
+ENTRYPOINT ["/usr/sbin/td-agent"]
+CMD ["-vv"]
