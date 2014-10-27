@@ -46,6 +46,7 @@
   roles:
     - { role: mesosphere, tags: [ 'mesos' ], mesos_mode: slave }
     - { role: marathon, tags: [ 'marathon'], marathon_run_mode: bridge }
+    - { role: fluentd , tags: [ 'fluentd' ] }
 
 # HAproxy
 - hosts: haproxy

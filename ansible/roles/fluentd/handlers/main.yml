@@ -1,0 +1,16 @@
+---
+- name: Build fluentd image
+  docker_image: >
+    name={{docker_name}}
+    tag={{docker_tag}}
+    path={{fluentd_dir}}
+    state=build
+  notify: Run fluentd inside docker_name
+
+- name: Run fluentd inside docker_name
+  docker: >
+    image={{docker_name}}
+    name={{docker_container_name}}
+    volumes=/tmp/mesos/slaves/:/data/mesos/slaves,/tmp/logentries/:/configs/logentries
+    command="--config /etc/td-agent/conf/td-agent.conf"
+    state=restarted

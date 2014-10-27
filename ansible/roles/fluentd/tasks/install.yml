@@ -1,0 +1,35 @@
+---
+- name: Install required docker dependency
+  pip: name=docker-py
+
+- name: Create fluent temporary directory
+  file: path={{fluentd_dir}} state=directory
+
+- name: Create tokens directory
+  file: path=/tmp/logentries state=directory
+
+- name: Add fluentd.conf
+  template: src=td-agent.conf.j2 dest={{fluentd_dir}}/td-agent.conf
+  notify:
+    - Build fluentd image
+
+- name: Add Dockerfile
+  template: src=Dockerfile.j2 dest={{fluentd_dir}}/Dockerfile
+  notify:
+    - Build fluentd image
+
+- name: Make sure fluentd image is created
+  docker_image: >
+    name={{docker_name}}
+    tag={{docker_tag}}
+    path={{fluentd_dir}}
+    state=present
+
+- name: Make sure fluentd is running
+  docker: >
+    image={{docker_name}}
+    name={{docker_container_name}}
+    volumes=/tmp/mesos/slaves/:/data/mesos/slaves,/tmp/logentries/:/configs/logentries
+    command="--config /etc/td-agent/conf/td-agent.conf"
+    state=present
+

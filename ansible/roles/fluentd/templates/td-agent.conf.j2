@@ -1,0 +1,19 @@
+<source>
+  type tail
+  pos_file /tmp/docker.log.pos
+  tag docker.*
+  path /data/mesos/slaves/*/frameworks/*/executors/*/runs/latest/stdout
+  format none
+</source>
+
+<match docker.**>
+  type record_reformer
+  tag ${tag_parts[8]}.log
+</match>
+
+<match **.log>
+  type logentries
+  host {{logentries_host}}
+  port {{logentries_port}}
+  path {{logentries_token_path}}
+</match>

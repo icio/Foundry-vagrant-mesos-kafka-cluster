@@ -1,0 +1,13 @@
+---
+fluentd_dir: /opt/fluentd
+fluentd_plugins:
+  - fluent-plugin-record-reformer
+  - "fluent-plugin-logentries -v 0.1.0"
+
+docker_name: fluentd
+docker_container_name: fluentd_shipper
+docker_tag: latest
+
+logentries_host: data.logentries.com
+logentries_port: 80
+logentries_token_path: /configs/logentries/
