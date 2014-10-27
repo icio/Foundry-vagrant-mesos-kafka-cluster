@@ -2,7 +2,7 @@
   type tail
   pos_file /tmp/docker.log.pos
   tag docker.*
-  path /tmp/mesos/slaves/*/frameworks/*/executors/*/runs/latest/stdout
+  path /data/mesos/slaves/*/frameworks/*/executors/*/runs/latest/stdout
   format none
 </source>
 
@@ -13,8 +13,7 @@
 
 <match **.log>
   type logentries
-  host   {{logentries.host}}
-  port   {{logentries.port}}
-  tokens {% for key, value in logentries.tokens.iteritems() %}{% if loop.index != 1 %},{% endif %}{{key}}:{{value}}{% endfor %}
-
+  host {{logentries_host}}
+  port {{logentries_port}}
+  path {{logentries_token_path}}
 </match>
