@@ -19,7 +19,7 @@ Marathon framework. The slave will come with Docker installed.
 # Deploying Docker containers
 
 After provisioning the servers you can access Marathon here:
-http://10.0.10.11:8080/ and the master itself here: http://10.0.10.11:5050/
+http://100.0.10.11:8080/ and the master itself here: http://100.0.10.11:5050/
 
 Submitting a Docker container to run on the cluster is done by making a call to
 Marathon's REST API:
