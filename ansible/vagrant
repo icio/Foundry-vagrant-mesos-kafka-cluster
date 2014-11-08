@@ -10,9 +10,15 @@
 100.0.10.101
 100.0.10.102
 100.0.10.103
+100.0.10.104
 
 [haproxy]
 100.0.10.21
+100.0.10.22
+
+[vpn]
+100.0.1.6
+
 [kafka-nodes]
 100.0.20.101
 
@@ -21,3 +27,5 @@
 mesos-masters
 mesos-slaves
 haproxy
+vpn
+kafka-nodes

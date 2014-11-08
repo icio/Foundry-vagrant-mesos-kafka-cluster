@@ -11,4 +11,14 @@
 - name: Install Docker
   apt: pkg=lxc-docker state=installed
 
+- name: install apt packages
+  apt: "name='{{ item }}' state=present"
+  with_items:
+    - git
+    - python-pip
+
+- name: install docker-py
+  pip: name=docker-py version=0.3.1
+# Build and prepare bamboo image
+
 
