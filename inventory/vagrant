@@ -9,15 +9,8 @@
 [mesos-slaves]
 100.0.10.101
 100.0.10.102
-#100.0.10.103
+100.0.10.103
 #100.0.10.104
-
-[haproxy]
-100.0.10.21
-100.0.10.22
-
-[vpn]
-100.0.1.6
 
 [kafka-nodes]
 100.0.20.101
@@ -28,3 +21,19 @@ mesos-slaves
 haproxy
 vpn
 kafka-nodes
+
+
+[cdh5-namenode:children]
+cdh5-namenode-primary
+cdh5-namenode-backup
+
+[cdh5-namenode-primary]
+100.0.10.11 #mesos-master1
+
+[cdh5-namenode-backup]
+100.0.10.12 #mesos-master2
+
+[cdh5-journalnode]
+100.0.10.101 #mesos-slave1-3
+100.0.10.102
+100.0.10.102

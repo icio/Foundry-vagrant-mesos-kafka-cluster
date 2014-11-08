@@ -18,6 +18,7 @@
 
   roles:
     - common
+    - cdh5-base
 
 # Mesos masters
 - hosts: mesos-masters
@@ -66,3 +67,7 @@
 
   roles:
     - { role: kafka, tags: [ 'kafka'], broker_id: 1 }
+
+- hosts: cdh5-all
+  roles:
+  - cdh5-base
