@@ -12,6 +12,7 @@
 #100.0.10.103
 #100.0.10.104
 
+<<<<<<< HEAD:ansible/vagrant
 [haproxy]
 100.0.10.21
 100.0.10.22
@@ -29,3 +30,8 @@ mesos-slaves
 haproxy
 vpn
 kafka-nodes
+=======
+[vagrant:children]
+mesos-masters
+mesos-slaves
+>>>>>>> upstream/master:inventory/vagrant
