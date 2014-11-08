@@ -13,6 +13,9 @@
 
 [haproxy]
 100.0.10.21
+[kafka-nodes]
+100.0.20.101
+
 
 [vagrant:children]
 mesos-masters

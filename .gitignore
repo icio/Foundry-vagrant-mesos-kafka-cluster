@@ -1,2 +1,4 @@
 .vagrant
 .dockercfg
+
+spark-1.1.0-bin-cdh4.tgz

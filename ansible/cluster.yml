@@ -50,6 +50,23 @@
     - { role: marathon, tags: [ 'marathon'], marathon_run_mode: bridge }
     - { role: bamboo-haproxy, tags: [ 'bamboo'] }
 
+# Kafka
+- hosts: kafka-nodes
+  gather_facts: false
+  sudo: yes
+
+  vars:
+    - zk_servers_noproto: "{{ groups['mesos-masters'] | join(':2181,') }}:2181"
+    - K_VERSION: 0.8.1.1
+    - K_BUILD: kafka_2.9.2-{{K_VERSION}}
+    - K_DATA_DIR: /var/data/kafka
+    - Z_VERSION: 3.4.6
+    - Z_BUILD: zookeeper-{{Z_VERSION}}
+    - Z_DATA_DIR: /var/data/zookeeper
+
+  roles:
+    - { role: kafka, tags: [ 'kafka'], broker_id: 1 }
+
 # HAproxy
 - hosts: haproxy
   gather_facts: false
