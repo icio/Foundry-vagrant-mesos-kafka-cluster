@@ -66,19 +66,3 @@
 
   roles:
     - { role: kafka, tags: [ 'kafka'], broker_id: 1 }
-
-# HAproxy
-- hosts: haproxy
-  gather_facts: false
-  sudo: yes
-
-  roles:
-    - { role: haproxy, tags: [ 'haproxy' ] }
-
-# VPN
-- hosts: vpn
-  gather_facts: false
-  sudo: yes
-
-  roles:
-    - { role: openvpn, tags: [ 'vpn' ] }
