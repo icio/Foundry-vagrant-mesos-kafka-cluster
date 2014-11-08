@@ -70,8 +70,4 @@
   wait_for: host={{inventory_hostname}} port=9092
 
 - name: create "test" topic
-  command: /home/kafka/current/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
-
-- name: Display IP address and port mappings for containers
-  debug: msg="{{ inventory_hostname }}:{{item['HostConfig']}}"
-  with_items: docker_containers
+  command: /home/kafka/current/bin/kafka-topics.sh --create --zookeeper {{ zk_servers_noproto }} --replication-factor 1 --partitions 1 --topic test
