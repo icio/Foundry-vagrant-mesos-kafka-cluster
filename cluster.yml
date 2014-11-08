@@ -69,5 +69,18 @@
     - { role: kafka, tags: [ 'kafka'], broker_id: 1 }
 
 - hosts: cdh5-all
+  gather_facts: false
+  sudo: yes
+  vars:
+    - zk_servers_noproto: "{{ groups['mesos-masters'] | join(':2181,') }}:2181"
+    - quorum_size: "{{ ((groups['mesos-masters'] | length) / 2) | round(0, 'ceil') | int }}"
+  roles:
+  - { role: cdh5-base }
+
+- hosts: cdh5-namenode-primary
+  gather_facts: false
+  sudo: yes
+  vars:
+
   roles:
   - cdh5-base

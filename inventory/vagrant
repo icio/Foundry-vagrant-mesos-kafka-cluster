@@ -18,8 +18,6 @@
 [vagrant:children]
 mesos-masters
 mesos-slaves
-haproxy
-vpn
 kafka-nodes
 
 
@@ -37,3 +35,15 @@ cdh5-namenode-backup
 100.0.10.101 #mesos-slave1-3
 100.0.10.102
 100.0.10.102
+
+[cdh5-datanodes]
+mesos-slaves
+
+[cdh5-all]
+100.0.10.11
+#100.0.10.12
+#100.0.10.13
+100.0.10.101
+100.0.10.102
+100.0.10.103
+#100.0.10.104

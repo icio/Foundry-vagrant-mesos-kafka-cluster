@@ -6,11 +6,9 @@ initLimit=10
 # The number of ticks that can pass between 
 # sending a request and getting an acknowledgement
 syncLimit=5
-# the directory where the snapshot is stored.
-dataDir={{ zookeeper_datadir }}
 # the port at which the clients will connect
 clientPort=2181
 maxClientCnxns=0
-{% for host in groups['cdh5-zookeeperserver'] %}
-server.{{ hostvars[host].zoo_id }}={{ host }}.{{ tl_domain }}:2888:3888
+{% for host in groups['mesos-masters'] %}
+server.{{ hostvars[host].zoo_id }}={{ host }}:2888:3888
 {% endfor %}

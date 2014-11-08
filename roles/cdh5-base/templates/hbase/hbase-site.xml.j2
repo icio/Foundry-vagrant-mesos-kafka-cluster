@@ -35,6 +35,6 @@
   </property>
   <property>
     <name>hbase.zookeeper.quorum</name>
-    <value>{{ groups['cdh5-zookeeperserver'] | join('.' ~ tl_domain + ',') }}.{{ tl_domain }}</value>
+    <value>{{ quorum_size }}</value>
   </property>
 </configuration>

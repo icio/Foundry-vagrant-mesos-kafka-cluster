@@ -3,8 +3,9 @@ mesos_ip: "{{ansible_eth1.ipv4.address}}"
 marathon_ip: "{{mesos_ip}}"
 
 version:
-  hadoop: 2.2.0+cdh5.0.0+1610-0.cdh5b2.p0.51.el6
-  lzo: 0.4.15+gplextras5.0.0+0-0.gplextras5b2.p0.28.el6
+  hadoop: "0.20"
+  #hadoop: 2.2.0+cdh5.0.0+1610-0.cdh5b2.p0.51.el6
+  lzo: 0.4.15
   hbase: 0.96.1.1+cdh5.0.0+23-0.cdh5b2.p0.20.el6
   hive: 0.12.0+cdh5.0.0+265-0.cdh5b2.p0.33.el6
   oozie: 4.0.0+cdh5.0.0+144-0.cdh5b2.p0.21.el6
@@ -15,10 +16,10 @@ version:
 ansible_path: "{{ lookup('env','ANSIBLE_WORK_DIR') }}"
 repo_server: 10.100.1.10
 
-tl_domain: heylinux.com
+tl_domain: ""
 
 # core-site_xml
-nameservice_id: mycluster
+nameservice_id: foundry
 fs_trash_interval: 1440
 
 # zoo_cfg

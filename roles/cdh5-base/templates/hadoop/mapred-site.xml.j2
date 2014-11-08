@@ -27,11 +27,11 @@
   <!--  the most important properties for jobhistory -->
   <property>
     <name>mapreduce.jobhistory.address</name>
-    <value>{{ groups['cdh5-resourcemanager'] | join() }}.{{ tl_domain }}:10020</value>
+    <value>{{ groups['cdh5-resourcemanager'] | join() }}:10020</value>
   </property>
   <property>
     <name>mapreduce.jobhistory.webapp.address</name>
-    <value>{{ groups['cdh5-resourcemanager'] | join() }}.{{ tl_domain }}:19888</value>
+    <value>{{ groups['cdh5-resourcemanager'] | join() }}:19888</value>
   </property>
 
   <!-- YARN requires a staging directory for temporary files created by running jobs -->
