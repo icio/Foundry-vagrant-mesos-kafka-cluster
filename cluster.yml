@@ -44,12 +44,12 @@
     - mesos_options_slave:
         containerizers: "docker,mesos"
         executor_registration_timeout: 5mins
-    - zk_servers_noproto: "{{ groups['mesos-masters'] | join(':2181,') }}:2181"
 
   roles:
     - { role: mesosphere, tags: [ 'mesos' ], mesos_mode: slave }
     - { role: marathon, tags: [ 'marathon'], marathon_run_mode: bridge }
     - { role: bamboo-haproxy, tags: [ 'bamboo'] }
+    - { role: cdh5-slave }
 
 # Kafka
 - hosts: kafka-nodes
@@ -83,4 +83,4 @@
   vars:
 
   roles:
-  - cdh5-base
+  - { role: cdh5-namenode-primary }
