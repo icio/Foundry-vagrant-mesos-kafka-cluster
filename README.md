@@ -1,7 +1,7 @@
-vagrant-mesos-cluster
+The Foundry
 =====================
 
-A vagrant configuration to set up a cluster of mesos master, slaves and zookeepers through ansible
+A vagrant configuration to set up a cluster of mesos master, slaves and zookeepers through ansible. It will also set up a seperate Kafka cluster that piggybacks off Zookeeper from the Mesos cluster.
 
 # Usage
 
@@ -11,9 +11,11 @@ Clone the repository, and run:
 vagrant up
 ```
 
-This will provision a mini Mesos cluster with one master, one slave, and one
-HAProxy instance.  The Mesos master server also contains Zookeeper and the
-Marathon framework. The slave will come with Docker installed. 
+This will provision a mini Mesos cluster with one master, three slaves, and one
+Kafka instance.  The Mesos master server also contains Zookeeper and the
+Marathon framework. The slave will come with HAProxy, Docker, and Bamboo installed.
+
+Bamboo handles service discovery and reconfigures HAProxy. See usage instructions here: https://github.com/QubitProducts/bamboo
 
 
 # Deploying Docker containers
