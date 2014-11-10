@@ -84,5 +84,21 @@
   roles:
   - { role: cdh5-journalnode }
 
+- hosts: cdh5-namenode-primary
+  gather_facts: true
+  sudo: yes
+  roles: 
+  - cdh5-namenode-primary
+
+- hosts: cdh5-namenode-backup
+  sudo: yes
   roles:
-  - { role: cdh5-namenode-primary }
+  - cdh5-namenode-backup
+
+- hosts: cdh5-namenode-primary
+  tasks:
+  - name: start zkfc for namenodes
+    service: name=hadoop-hdfs-zkfc state=started
+    tags:
+    - cdh5-namenode-primary
+    - cdh5-namenode-primary-zkfc
