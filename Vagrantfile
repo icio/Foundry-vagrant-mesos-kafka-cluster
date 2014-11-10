@@ -22,8 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.cache.enable :apt
   end
 
-  cluster.each do |hostname, info|
-
+  cluster.each_with_index do |(hostname, info), index|
     config.vm.define hostname do |cfg|
 
       cfg.vm.provider :virtualbox do |vb, override|
@@ -37,16 +36,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       end
 
       # provision nodes with ansible
-      cfg.vm.provision :ansible do |ansible|
-        ansible.verbose = "v"
+      if index == cluster.size - 1
+        cfg.vm.provision :ansible do |ansible|
+          ansible.verbose = "vvvv"
 
-        ansible.inventory_path = "inventory/vagrant"
-        ansible.playbook = "cluster.yml"
-        ansible.limit = "#{info[:ip]}" # Ansible hosts are identified by ip
-      end
+          ansible.inventory_path = "inventory/vagrant"
+          ansible.playbook = "cluster.yml"
+          ansible.limit = 'all'# "#{info[:ip]}" # Ansible hosts are identified by ip
+        end # end provision
+      end #end if
 
-    end
+    end # end config
 
-  end
+  end #end cluster
 
-end
+end #end vagrant

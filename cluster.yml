@@ -80,7 +80,6 @@
 - hosts: cdh5-journalnode
   gather_facts: false
   sudo: yes
-  vars:
   roles:
   - { role: cdh5-journalnode }
 
