@@ -55,28 +55,28 @@
   
   <!-- unique identifiers for each NameNode in the nameservice --> 
   <property>
-    <name>dfs.ha.namenodes.{{ nameservice_id }}</name>
-    <value>{{ groups['cdh5-namenode'] | join(',') }}</value>
-  </property>
+        <name>dfs.ha.namenodes.{{ nameservice_id|lower }}</name>
+        <value>{% for host in groups['cdh5-namenodes'] %}nn{{ loop.index }}{% if not loop.last %},{% endif %}{% endfor %}</value>
+    </property>
   <!-- the fully-qualified RPC address for each NameNode to listen on -->
-  {% for host in groups['cdh5-namenode'] %}
-<property>
-    <name>dfs.namenode.rpc-address.{{ nameservice_id }}.{{ host }}</name>
-    <value>{{ host }}:8020</value>
-  </property>
-  {% endfor %}
+  {% for host in groups['cdh5-namenodes'] %}
+    <property>
+        <name>dfs.namenode.rpc-address.{{ nameservice_id|lower }}.nn{{ loop.index }}</name>
+        <value>{{ host }}:8020</value>
+    </property>
+    {% endfor %}
 <!-- the fully-qualified HTTP address for each NameNode to listen on -->
-  {% for host in groups['cdh5-namenode'] %}
-<property>
-    <name>dfs.namenode.http-address.{{ nameservice_id }}.{{ host }}</name>
-    <value>{{ host }}:50070</value>
-  </property>
-  {% endfor %}
+  {% for host in groups['cdh5-namenodes'] %}
+    <property>
+        <name>dfs.namenode.http-address.{{ nameservice_id|lower }}.nn{{ loop.index }}</name>
+        <value>{{ host }}:50070</value>
+    </property>
+    {% endfor %}
  
   <!-- the location of the shared storage directory --> 
   <property>
-    <name>dfs.namenode.shared.edits.dir</name>
-    <value>qjournal://{{ groups['cdh5-journalnode'] | join('.' ~ tl_domain + ':8485' + ';') }}:8485/{{ nameservice_id }}</value>
+        <name>dfs.namenode.shared.edits.dir</name>
+        <value>qjournal://{% for host in groups['cdh5-journalnode'] %}{{ host }}:8485{% if not loop.last %};{% endif %}{% endfor %}/{{ nameservice_id|lower }}</value>
   </property>
   <!-- the path where the JournalNode daemon will store its local state -->
   <property>
