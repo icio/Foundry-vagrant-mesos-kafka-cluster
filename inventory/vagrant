@@ -1,5 +1,5 @@
-[local]
-127.0.0.1 ansible_connection=local
+#[local]
+#127.0.0.1 ansible_connection=local
 
 [mesos-masters]
 100.0.10.11
@@ -10,7 +10,6 @@
 100.0.10.101
 100.0.10.102
 100.0.10.103
-#100.0.10.104
 
 [kafka-nodes]
 100.0.20.101
@@ -29,14 +28,20 @@ cdh5-namenode-backup
 100.0.10.11 #mesos-master1
 
 [cdh5-namenode-backup]
-100.0.10.12 #mesos-master2
+100.0.20.101 #temporary so I don't have to spin up even number of masters
+#100.0.10.12 #mesos-master2
+
+[cdh5-namenodes]
+100.0.10.11
+#100.0.10.12
+100.0.20.101 #temporary so I don't have to spin up even number of masters
 
 [cdh5-journalnode]
-100.0.10.101 #mesos-slave1-3
+100.0.10.101
 100.0.10.102
-100.0.10.102
+100.0.10.103
 
-[cdh5-datanodes]
+[cdh5-datanodes:children]
 mesos-slaves
 
 [cdh5-all]
@@ -46,4 +51,4 @@ mesos-slaves
 100.0.10.101
 100.0.10.102
 100.0.10.103
-#100.0.10.104
+100.0.20.101 #temporary so I don't have to spin up even number of masters
