@@ -77,10 +77,12 @@
   roles:
   - { role: cdh5-base }
 
-- hosts: cdh5-namenode-primary
+- hosts: cdh5-journalnode
   gather_facts: false
   sudo: yes
   vars:
+  roles:
+  - { role: cdh5-journalnode }
 
   roles:
   - { role: cdh5-namenode-primary }
