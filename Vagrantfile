@@ -5,9 +5,9 @@ cluster = {
   "mesos-master1" => { :ip => "100.0.10.11",  :cpus => 1, :mem => 1024 },
   #"mesos-master2" => { :ip => "100.0.10.12",  :cpus => 1, :mem => 1024 },
   #"mesos-master3" => { :ip => "100.0.10.13",  :cpus => 1, :mem => 1024 },
-  "mesos-slave1"  => { :ip => "100.0.10.101", :cpus => 1, :mem => 256 },
-  "mesos-slave2"  => { :ip => "100.0.10.102", :cpus => 1, :mem => 256 },
-  "mesos-slave3"  => { :ip => "100.0.10.103", :cpus => 1, :mem => 256 },
+  "mesos-slave1"  => { :ip => "100.0.10.101", :cpus => 1, :mem => 512 },
+  "mesos-slave2"  => { :ip => "100.0.10.102", :cpus => 1, :mem => 512 },
+  "mesos-slave3"  => { :ip => "100.0.10.103", :cpus => 1, :mem => 512 },
   # "mesos-slave4"  => { :ip => "100.0.10.104", :cpus => 1, :mem => 512 },
   # "haproxy1"      => { :ip => "100.0.10.21",  :cpus => 1, :mem => 256 },
   # "haproxy2"      => { :ip => "100.0.10.22",  :cpus => 1, :mem => 256 },
@@ -19,8 +19,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :machine
-    config.cache.enable :apt
-  end
+    config.cache.enable :apt 
+    config.cache.enable :apt_cacher
+    config.cache.synced_folder_opts = {
+      type: :nfs,
+      # The nolock option can be useful for an NFSv3 client that wants to avoid the
+      # NLM sideband protocol. Without this option, apt-get might hang if it tries
+      # to lock files needed for /var/cache/* operations. All of this can be avoided
+      # by using NFSv4 everywhere. Please note that the tcp option is not the default.
+      mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
+    }
+  end # end if
 
   cluster.each_with_index do |(hostname, info), index|
     config.vm.define hostname do |cfg|
@@ -33,7 +42,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         vb.name = 'vagrant-mesos-' + hostname
         vb.customize ["modifyvm", :id, "--memory", info[:mem], "--cpus", info[:cpus], "--hwvirtex", "on" ]
-      end
+      end # end cfg.vm.provider
 
       # provision nodes with ansible
       if index == cluster.size - 1
@@ -43,7 +52,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           ansible.inventory_path = "inventory/vagrant"
           ansible.playbook = "cluster.yml"
           ansible.limit = 'all'# "#{info[:ip]}" # Ansible hosts are identified by ip
-        end # end provision
+        end # end cfg.vm.provision
       end #end if
 
     end # end config
