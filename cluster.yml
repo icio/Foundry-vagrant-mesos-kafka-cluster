@@ -18,7 +18,6 @@
 
   roles:
     - common
-    - cdh5-base
 
 # Mesos masters
 - hosts: mesos-masters
@@ -44,12 +43,12 @@
     - mesos_options_slave:
         containerizers: "docker,mesos"
         executor_registration_timeout: 5mins
+    - zk_servers_noproto: "{{ groups['mesos-masters'] | join(':2181,') }}:2181"
 
   roles:
     - { role: mesosphere, tags: [ 'mesos' ], mesos_mode: slave }
     - { role: marathon, tags: [ 'marathon'], marathon_run_mode: bridge }
     - { role: bamboo-haproxy, tags: [ 'bamboo'] }
-    - { role: cdh5-slave }
 
 # Kafka
 - hosts: kafka-nodes
@@ -83,6 +82,12 @@
   roles:
   - { role: cdh5-journalnode }
 
+- hosts: cdh5-datanodes
+  gather_facts: false
+  sudo: yes
+  roles:
+  - { role: cdh5-slave }
+
 - hosts: cdh5-namenode-primary
   gather_facts: true
   sudo: yes
@@ -94,7 +99,7 @@
   roles:
   - cdh5-namenode-backup
 
-- hosts: cdh5-namenode-primary
+- hosts: cdh5-namenodes#-primary
   tasks:
   - name: start zkfc for namenodes
     service: name=hadoop-hdfs-zkfc state=started
