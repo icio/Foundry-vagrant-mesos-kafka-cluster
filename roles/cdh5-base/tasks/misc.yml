@@ -1,6 +1,6 @@
 ---
 - name: install the libselinux-python package
-  yum: name=libselinux-python state=installed
+  apt: name=libselinux-python state=installed force=yes
   tags:
   - disable_selinux
 
