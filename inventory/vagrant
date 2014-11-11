@@ -28,8 +28,12 @@ kafka-nodes
 100.0.10.11 #mesos-master1
 
 [cdh5-namenode-backup]
-100.0.10.102
-#100.0.10.12 
+100.0.20.101
+#100.0.10.102
+#100.0.10.12
+
+[cdh5-httpfs:children]
+cdh5-namenode-backup
 
 [cdh5-namenodes:children]
 cdh5-namenode-primary
@@ -43,10 +47,7 @@ cdh5-namenode-backup
 [cdh5-datanodes:children]
 mesos-slaves
 
-[cdh5-all]
-100.0.10.11
-#100.0.10.12
-#100.0.10.13
-100.0.10.101
-100.0.10.102
-100.0.10.103
+[cdh5-all:children]
+mesos-masters
+mesos-slaves
+cdh5-namenodes
