@@ -17,7 +17,7 @@
   - cdh5-namenode-backup
 
 - name: create the dfs hosts exclude file
-  file: path={{ dfs_hosts_exclude }} owner=hdfs group=hdfs mode=0644
+  file: path={{ dfs_hosts_exclude }} owner=hdfs group=hdfs mode=0644 state=touch
   tags:
   - cdh5-namenode
   - cdh5-namenode-backup
