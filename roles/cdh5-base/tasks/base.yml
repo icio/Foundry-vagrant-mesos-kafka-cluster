@@ -11,15 +11,13 @@
 #   apt_key: http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh/archive.key
 
 # - name: install needed rpms for hadoop
-#   apt: name={{ item }} state=present
+#   apt: name={{ item }} state=present force=yes
 #   with_items:
 #   - gcc
 #   - gcc-c++
 #   - make
 #   tags:
 #   - cdh5-base
-
-# - debug: msg="{{ hostvars }}"
 
 - name: create the hosts file for all machines
   template: src=hosts.j2 dest=/etc/hosts owner=root group=root mode=0644
