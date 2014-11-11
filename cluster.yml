@@ -93,13 +93,13 @@
   roles:
   - cdh5-namenode-backup
 
-- hosts: cdh5-namenodes
-  tasks:
-  - name: start zkfc for namenodes
-    service: name=hadoop-hdfs-zkfc state=started
-    tags:
-    - cdh5-namenode-primary
-    - cdh5-namenode-primary-zkfc
+# - hosts: cdh5-namenodes
+#   tasks:
+#   - name: start zkfc for namenodes
+#     service: name=hadoop-hdfs-zkfc state=started
+#     tags:
+#     - cdh5-namenode-primary
+#     - cdh5-namenode-primary-zkfc
 
 - hosts: cdh5-httpfs
   roles:
