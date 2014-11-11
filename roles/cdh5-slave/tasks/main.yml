@@ -1,6 +1,6 @@
 ---
 - name: install datanode nodemanager and mapreduce pkgs
-  apt: name={{ item }} state=present
+  apt: name={{ item }} state=present force=yes
   with_items:
   - hadoop-yarn-nodemanager
   - hadoop-hdfs-datanode
