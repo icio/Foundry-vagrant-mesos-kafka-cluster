@@ -8,7 +8,7 @@ cluster = {
   "mesos-slave1"  => { :ip => "100.0.10.101", :cpus => 1, :mem => 512 },
   "mesos-slave2"  => { :ip => "100.0.10.102", :cpus => 1, :mem => 512 },
   "mesos-slave3"  => { :ip => "100.0.10.103", :cpus => 1, :mem => 512 },
-  #"kafka-node1"   => { :ip => "100.0.20.101", :cpus => 1, :mem => 1536 },
+  "kafka-node1"   => { :ip => "100.0.20.101", :cpus => 1, :mem => 1536 },
 }
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
