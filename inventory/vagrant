@@ -42,3 +42,6 @@ mesos-slaves
 mesos-masters
 mesos-slaves
 cdh5-namenodes
+
+[spark-master]
+mesos-master3

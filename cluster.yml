@@ -126,3 +126,8 @@
     - cdh5-namenode-primary
     - cdh5-namenode-primary-tmpdir
 
+- hosts: spark-master
+  sudo: yes
+  tasks:
+  roles:
+  - { role: spark-base}

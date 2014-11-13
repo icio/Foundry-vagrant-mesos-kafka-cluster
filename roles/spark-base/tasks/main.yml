@@ -1,0 +1,42 @@
+- name: create spark user
+  user: name=spark groups=hdfs,hadoop createhome=yes state=present
+
+- name: create .ssh directory for hdfs user
+  file: path=/home/spark/.ssh state=directory owner=spark group=hdfs mode=0700
+
+- name: install git
+  apt: name={{ item }} state=present force=yes
+  with_items:
+  - git
+  tags:
+  - spark-base
+
+- name: clone spark repo 
+  git: repo=https://github.com/apache/spark.git dest={{ spark_home }} version={{ version['spark'] }}
+
+- name: build spark repo
+  shell: SPARK_HADOOP_VERSION={{version.spark_hadoop}} {{ spark_home }}/sbt/sbt clean assembly
+
+- name: make distribution
+  shell: /home/spark/spark/make-distribution.sh --hadoop {{version.spark_hadoop}}
+
+- name: rename spark distribution
+  shell: mv {{ spark_home }}/dist {{ spark_home }}/spark-{{version.spark_hadoop}}
+
+- name: create tarball for spark distribution
+  shell: tar czf {{ spark_home }}/spark-{{version.spark_hadoop}}
+
+- name: put spark tarball in hdfs
+  shell: hadoop fs -put {{ spark_home }}/spark-{{version.spark_hadoop}} /tmp
+
+- name: copy spark configuration files
+  template: src={{ item }}.j2 dest={{ spark_home }}/conf/{{ item }} owner=spark group=spark mode=0644
+  with_items:
+  - fairscheduler.xml
+  - log4j.properties
+  - metrics.properties
+  - slaves
+  - spark-env.sh
+  tags:
+  - cdh5-spark-base
+  - cdh5-spark-base-conf
