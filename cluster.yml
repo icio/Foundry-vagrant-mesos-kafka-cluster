@@ -94,6 +94,7 @@
   - cdh5-namenode-backup
 
 # - hosts: cdh5-namenodes
+#   sudo: yes
 #   tasks:
 #   - name: start zkfc for namenodes
 #     service: name=hadoop-hdfs-zkfc state=started
@@ -102,6 +103,7 @@
 #     - cdh5-namenode-primary-zkfc
 
 - hosts: cdh5-httpfs
+  sudo: yes
   roles:
   - cdh5-httpfs
 
@@ -110,3 +112,15 @@
   sudo: yes
   roles:
   - { role: cdh5-slave }
+
+# - hosts: cdh5-namenode-primary
+#   sudo: yes
+#   tasks:
+#   - name: create tmp directory
+#     shell: creates={{ item }} sudo -u hdfs hadoop fs -mkdir -p /tmp; sudo -u hdfs hadoop fs -chmod -R 1777 /tmp && touch {{ item }}
+#     with_items:
+#     - /var/hadoop/.status/tmp_dir.created
+#     tags:
+#     - cdh5-namenode-primary
+#     - cdh5-namenode-primary-tmpdir
+

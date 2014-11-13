@@ -21,12 +21,12 @@
   <!-- the default path prefix used by the Hadoop FS client when none is given -->
   <property>
     <name>fs.defaultFS</name>
-    <value>hdfs://{{ nameservice_id }}/</value>
+    <value>hdfs://{{groups['cdh5-namenodes'][0]}}:8020/</value>
   </property>
 
   <property>
     <name>fs.default.name</name>
-    <value>hdfs://{{ nameservice_id }}/</value>
+    <value>hdfs://{{groups['cdh5-namenodes'][0]}}:8020/</value>
   </property>
 
   <!-- enable trash -->
