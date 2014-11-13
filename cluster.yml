@@ -19,6 +19,15 @@
   roles:
     - common
 
+- hosts: cdh5-all
+  gather_facts: false
+  sudo: yes
+  vars:
+    - zk_servers_noproto: "{{ groups['mesos-masters'] | join(':2181,') }}:2181"
+    - quorum_size: "{{ ((groups['mesos-masters'] | length) / 2) | round(0, 'ceil') | int }}"
+  roles:
+  - { role: cdh5-base }
+
 # Mesos masters
 - hosts: mesos-masters
   gather_facts: false
@@ -48,7 +57,7 @@
   roles:
     - { role: mesosphere, tags: [ 'mesos' ], mesos_mode: slave }
     - { role: marathon, tags: [ 'marathon'], marathon_run_mode: bridge }
-    - { role: bamboo-haproxy, tags: [ 'bamboo'] }
+    #- { role: bamboo-haproxy, tags: [ 'bamboo'] }
 
 # Kafka
 - hosts: kafka-nodes
@@ -67,14 +76,6 @@
   roles:
     - { role: kafka, tags: [ 'kafka'], broker_id: 1 }
 
-- hosts: cdh5-all
-  gather_facts: false
-  sudo: yes
-  vars:
-    - zk_servers_noproto: "{{ groups['mesos-masters'] | join(':2181,') }}:2181"
-    - quorum_size: "{{ ((groups['mesos-masters'] | length) / 2) | round(0, 'ceil') | int }}"
-  roles:
-  - { role: cdh5-base }
 
 - hosts: cdh5-journalnode
   gather_facts: false
@@ -83,7 +84,7 @@
   - { role: cdh5-journalnode }
 
 - hosts: cdh5-namenode-primary
-  gather_facts: true
+  gather_facts: false
   sudo: yes
   roles: 
   - cdh5-namenode-primary
@@ -93,14 +94,14 @@
   roles:
   - cdh5-namenode-backup
 
-# - hosts: cdh5-namenodes
-#   sudo: yes
-#   tasks:
-#   - name: start zkfc for namenodes
-#     service: name=hadoop-hdfs-zkfc state=started
-#     tags:
-#     - cdh5-namenode-primary
-#     - cdh5-namenode-primary-zkfc
+- hosts: cdh5-namenodes
+  sudo: yes
+  tasks:
+  - name: start zkfc for namenodes
+    service: name=hadoop-hdfs-zkfc state=started
+    tags:
+    - cdh5-namenode-primary
+    - cdh5-namenode-primary-zkfc
 
 - hosts: cdh5-httpfs
   sudo: yes
@@ -113,14 +114,14 @@
   roles:
   - { role: cdh5-slave }
 
-# - hosts: cdh5-namenode-primary
-#   sudo: yes
-#   tasks:
-#   - name: create tmp directory
-#     shell: creates={{ item }} sudo -u hdfs hadoop fs -mkdir -p /tmp; sudo -u hdfs hadoop fs -chmod -R 1777 /tmp && touch {{ item }}
-#     with_items:
-#     - /var/hadoop/.status/tmp_dir.created
-#     tags:
-#     - cdh5-namenode-primary
-#     - cdh5-namenode-primary-tmpdir
+- hosts: cdh5-namenode-primary
+  sudo: yes
+  tasks:
+  - name: create tmp directory
+    shell: creates={{ item }} sudo -u hdfs hadoop fs -mkdir -p /tmp; sudo -u hdfs hadoop fs -chmod -R 1777 /tmp && touch {{ item }}
+    with_items:
+    - /var/hadoop/.status/tmp_dir.created
+    tags:
+    - cdh5-namenode-primary
+    - cdh5-namenode-primary-tmpdir
 
