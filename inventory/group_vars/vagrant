@@ -24,6 +24,7 @@ fs_trash_interval: 1440
 
 # zoo_cfg
 zookeeper_datadir: /var/lib/zookeeper
+zookeeper_logs: /var/log/zookeeper
 
 # hdfs-site_xml
 dfs_permissions_superusergroup: hdfs

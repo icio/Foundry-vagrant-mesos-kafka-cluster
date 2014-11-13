@@ -23,6 +23,7 @@
   gather_facts: false
   sudo: yes
   vars:
+    - zookeeper_servers: "{{ groups['mesos-masters'] }}"
     - zk_servers_noproto: "{{ groups['mesos-masters'] | join(':2181,') }}:2181"
     - quorum_size: "{{ ((groups['mesos-masters'] | length) / 2) | round(0, 'ceil') | int }}"
   roles:
