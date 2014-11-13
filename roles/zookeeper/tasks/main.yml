@@ -1,7 +1,7 @@
 ---
-- include: install.yml
+# - include: install.yml
 
-- include: deploy.yml
+# - include: deploy.yml
 # - name: Apt install zookeeper packages.
 #   apt: pkg={{item}} state=installed
 #   with_items:
@@ -10,3 +10,5 @@
 # - template: src=myid dest=/var/lib/zookeeper/myid
 #   notify:
 #     - restart zookeeper
+
+- include: install-cdh5.yml
