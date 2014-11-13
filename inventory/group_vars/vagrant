@@ -16,7 +16,7 @@ version:
 ansible_path: "{{ lookup('env','ANSIBLE_WORK_DIR') }}"
 repo_server: 10.100.1.10
 
-tl_domain: ""
+tl_domain: "foundry.project.com"
 
 # core-site_xml
 nameservice_id: foundry
