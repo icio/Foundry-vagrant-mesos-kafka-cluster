@@ -2,8 +2,8 @@ tickTime=2000
 dataDir={{zookeeper_data}}
 dataLogDir={{zookeeper_logs}}
 clientPort=2181
-initLimit=5
-syncLimit=2
+initLimit=10
+syncLimit=5
 #maxClientCnxns=60
 
 {% for server in zookeeper_servers %}
