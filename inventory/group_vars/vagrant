@@ -10,7 +10,7 @@ version:
   hive: 0.12.0+cdh5.0.0+265-0.cdh5b2.p0.33.el6
   oozie: 4.0.0+cdh5.0.0+144-0.cdh5b2.p0.21.el6
   pig: 0.12.0+cdh5.0.0+20-0.cdh5b2.p0.19.el6
-  zookeeper: 3.4.5+cdh5.0.0+27-0.cdh5b2.p0.29.el6
+  zookeeper: 3.4.5+cdh5.2.0+82-1.cdh5.2.0.p0.40~trusty-cdh5.2.0
   spark: 0.9.0-1.cdh5b2.p0.22.el6
 
 ansible_path: "{{ lookup('env','ANSIBLE_WORK_DIR') }}"

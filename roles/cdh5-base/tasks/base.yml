@@ -88,6 +88,20 @@
   - cdh5-base
   - cdh5-base-conf
 
+- name: install zookeeper base pkgs
+  apt: name={{ item }}={{ version['zookeeper'] }} state=present force=yes
+  with_items:
+  - zookeeper
+  tags:
+  - cdh5-base
+  - cdh5-zookeeper
+
+- name: create zookeeper cfgs
+  template: src=zoo.cfg.j2 dest=/etc/zookeeper/conf/zoo.cfg owner=zookeeper group=zookeeper mode=0644
+  tags:
+  - cdh5-base
+  - cdh5-zookeeper
+
 - name: copy the hadoop configuration files
   template: src=hadoop/{{ item }}.j2 dest=/etc/hadoop/conf.{{ nameservice_id }}/{{ item }} owner=hdfs group=hadoop mode=0664
   with_items:
