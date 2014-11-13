@@ -1,5 +1,5 @@
 ---
-- name: Check wheter bridge script has changed
+- name: Check whether bridge script has changed
   command: diff {{marathon_bin_folder}}/bin/haproxy-marathon-bridge /usr/local/bin/haproxy-marathon-bridge
   register: marathon_bridge_script_diff
   changed_when: False
