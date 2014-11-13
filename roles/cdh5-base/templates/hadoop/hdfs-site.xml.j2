@@ -101,6 +101,7 @@
     <name>dfs.ha.automatic-failover.enabled</name>
     <value>true</value>
   </property>
+  
   <property>
     <name>ha.zookeeper.quorum</name>
     <value>{{ groups['mesos-masters'] | join(':2181,') }}:2181</value>
