@@ -1,6 +1,6 @@
 ---
 - name: installl httpfs pkgs
-  yum: apt={{ item }} state=present force=yes
+  apt: name={{ item }} state=present force=yes
   with_items:
   - hadoop-httpfs
   tags:
