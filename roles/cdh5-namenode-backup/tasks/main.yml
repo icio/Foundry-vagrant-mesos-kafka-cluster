@@ -38,16 +38,16 @@
   - cdh5-namenode
   - cdh5-namenode-backup
 
-# - name: initialize the zkfc for namenode
-#   shell: creates={{ item }} sudo -u hdfs hdfs zkfc -formatZK && touch {{ item }}
-#   with_items:
-#   - /var/hadoop/.status/zkfc.formatted
-#   tags:
-#   - cdh5-namenode
-#   - cdh5-namenode-backup
+- name: initialize the zkfc for namenode
+  shell: creates={{ item }} sudo -u hdfs hdfs zkfc -formatZK && touch {{ item }}
+  with_items:
+  - /var/hadoop/.status/zkfc.formatted
+  tags:
+  - cdh5-namenode
+  - cdh5-namenode-backup
 
-# - name: start zkfc for namenodes
-#   service: name=hadoop-hdfs-zkfc state=started
-#   tags:
-#   - cdh5-namenode
-#   - cdh5-namenode-backup
+- name: start zkfc for namenodes
+  service: name=hadoop-hdfs-zkfc state=started
+  tags:
+  - cdh5-namenode
+  - cdh5-namenode-backup
