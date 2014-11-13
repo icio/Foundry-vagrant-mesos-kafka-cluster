@@ -5,6 +5,11 @@ A vagrant configuration to set up a cluster of mesos master, slaves and zookeepe
 
 # Usage
 
+Make sure you have the Vagrant-Hosts plugin installed
+```
+vagrant plugin install vagrant-hosts
+```
+
 Clone the repository, and run:
 
 ```
