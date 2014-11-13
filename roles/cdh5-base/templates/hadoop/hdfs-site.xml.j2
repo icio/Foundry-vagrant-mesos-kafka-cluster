@@ -74,9 +74,13 @@
     {% endfor %}
  
   <!-- the location of the shared storage directory --> 
-  <property>
+  <!-- <property>
         <name>dfs.namenode.shared.edits.dir</name>
         <value>qjournal://{% for host in groups['cdh5-journalnode'] %}{{ host }}:8485{% if not loop.last %};{% endif %}{% endfor %}/{{ nameservice_id|lower }}</value>
+  </property> -->
+  <property>
+    <name>dfs.namenode.shared.edits.dir</name>
+    <value>qjournal://{{ groups['cdh5-journalnode'] | join('.' ~ tl_domain + ':8485' + ';') }}.{{ tl_domain }}:8485/{{ nameservice_id }}</value>
   </property>
   <!-- the path where the JournalNode daemon will store its local state -->
   <property>
@@ -101,10 +105,15 @@
     <name>dfs.ha.automatic-failover.enabled</name>
     <value>true</value>
   </property>
-  
-  <property>
+
+  <!-- <property>
     <name>ha.zookeeper.quorum</name>
     <value>{{ groups['mesos-masters'] | join(':2181,') }}:2181</value>
+  </property>
+ -->
+ <property>
+    <name>ha.zookeeper.quorum</name>
+    <value>{{ groups['mesos-masters'] | join('.' ~ tl_domain + ':2181' + ',') }}.{{ tl_domain }}:2181</value>
   </property>
 
   <!-- The default block size for new files, in bytes --> 
