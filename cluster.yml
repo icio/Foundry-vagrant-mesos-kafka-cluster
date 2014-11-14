@@ -37,12 +37,12 @@
   vars:
     - zookeeper_servers: "{{ groups['mesos-masters'] }}"
     - mesos_quorum: "{{ ((groups['mesos-masters'] | length) / 2) | round(0, 'ceil') | int }}"
+    - zk_servers_noproto: "{{ groups['mesos-masters'] | join(':2181,') }}:2181"
 
   roles:
     - { role: zookeeper, tags: [ 'zookeeper' ] }
     - { role: mesosphere, tags: [ 'mesos' ], mesos_mode: master }
     - { role: marathon, tags: [ 'marathon'] }
-    #- { role: ansible-chronos, tags: [ 'chronos'] }
 
 # Mesos slaves
 - hosts: mesos-slaves
