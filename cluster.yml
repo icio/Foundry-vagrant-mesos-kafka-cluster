@@ -25,7 +25,7 @@
   vars:
     - zookeeper_servers: "{{ groups['mesos-masters'] }}"
     - zk_servers_noproto: "{{ groups['mesos-masters'] | join(':2181,') }}:2181"
-    - quorum_size: "{{ ((groups['mesos-masters'] | length) / 2) | round(0, 'ceil') | int }}"
+    - quorum_size: "{{ ((groups['mesos-masters']|length) // 2) + 1 }}"
   roles:
   - { role: cdh5-base }
 
@@ -36,7 +36,7 @@
 
   vars:
     - zookeeper_servers: "{{ groups['mesos-masters'] }}"
-    - mesos_quorum: "{{ ((groups['mesos-masters'] | length) / 2) | round(0, 'ceil') | int }}"
+    - mesos_quorum: "{{ ((groups['mesos-masters']|length) // 2) + 1 }}"
 
   roles:
     - { role: zookeeper, tags: [ 'zookeeper' ] }
