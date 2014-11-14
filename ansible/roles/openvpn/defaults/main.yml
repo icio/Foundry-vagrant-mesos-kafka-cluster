@@ -1,0 +1,17 @@
+---
+openvpn_easyrsa_dir: /etc/openvpn/keys
+
+openvpn_easyrsa_country: US
+openvpn_easyrsa_province: NY
+openvpn_easyrsa_city: New York
+openvpn_easyrsa_org: My org
+openvpn_easyrsa_email: admin@example.com
+openvpn_easyrsa_ou: myVPN
+openvpn_easyrsa_name: myVPN
+
+openvpn_users:
+  - admin
+
+openvpn_route: 10.0.0.0 255.255.0.0
+openvpn_port: 1194
+openvpn_protocol: tcp   # tcp or udp
