@@ -7,6 +7,9 @@ mesos-master[1:3]
 [mesos-slaves]
 mesos-slave[1:3]
 
+[spark-masters]
+mesos-master3
+
 [kafka-nodes]
 #100.0.20.101
 
@@ -42,3 +45,5 @@ mesos-slaves
 mesos-masters
 mesos-slaves
 cdh5-namenodes
+
+

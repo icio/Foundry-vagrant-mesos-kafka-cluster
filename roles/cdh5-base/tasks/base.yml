@@ -25,13 +25,13 @@
   - cdh5-base
   - cdh5-base-hosts
 
-# - name: install hadoop base pkgs
-#   apt: name={{ item }}={{ version['hadoop'] }} state=present
-#   with_items:
-#   - hadoop
-#   - hadoop-hdfs
-#   tags:
-#   - cdh5-base
+- name: install hadoop base pkgs
+  apt: name={{ item }}={{ version['hadoop'] }} state=present force=yes
+  with_items:
+  - hadoop
+  - hadoop-hdfs
+  tags:
+  - cdh5-base
 
 - name: install hadoop lzo pkgs
   apt: name={{ item }} state=present force=yes
