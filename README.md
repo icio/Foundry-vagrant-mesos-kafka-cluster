@@ -3,6 +3,10 @@ The Foundry
 
 A vagrant configuration to set up a cluster of mesos master, slaves and zookeepers through ansible. It will also set up a seperate Kafka cluster that piggybacks off Zookeeper from the Mesos cluster.
 
+This also installs HDFA HA (Namenodes on mesos-master1 and mesos-master2) and Spark (spark-submit at /home/spark/spark/bin/spark-submit on mesos-master3).
+
+For Kafka and Bamboo, just uncomment the Kafka VM in the Vagrantfile and Inventory File. And for Bamboo, uncomment in the cluster.yml playbook. These were turned off since it takes forever to Vagrant Up with them, and will probably be re-enabled soon.
+
 # Usage
 
 Make sure you have the Vagrant-Hosts plugin installed
