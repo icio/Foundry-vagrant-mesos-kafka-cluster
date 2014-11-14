@@ -58,7 +58,7 @@
   roles:
     - { role: mesosphere, tags: [ 'mesos' ], mesos_mode: slave }
     - { role: marathon, tags: [ 'marathon'], marathon_run_mode: bridge }
-    #- { role: bamboo-haproxy, tags: [ 'bamboo'] }
+    - { role: bamboo-haproxy, tags: [ 'bamboo'] }
 
 # Kafka
 - hosts: kafka-nodes
