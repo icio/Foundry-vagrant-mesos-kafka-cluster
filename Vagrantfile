@@ -14,7 +14,7 @@ cluster = {
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   if Vagrant.has_plugin?("vagrant-cachier")
-    config.cache.scope = :machine
+    config.cache.scope = :box #:machine
     config.cache.enable :apt 
     config.cache.enable :apt_cacher
     config.cache.synced_folder_opts = {
