@@ -1,9 +1,17 @@
 ---
+
+# - include: haproxy.yml
+
 - name: install docker-py
   pip: name=docker-py version=0.3.1
 # Build and prepare bamboo image
 - name: Build bamboo image
-  docker: image="thefactory/bamboo" command=-bind=":8000" name="bamboo" env="BAMBOO_ZK_HOST={{ zk_servers_noproto }}" ports="80:80,8000:8000"
+  docker: 
+    image: thefactory/bamboo
+    command: -bind=":8000" 
+    name: bamboo 
+    env: BAMBOO_ZK_HOST={{ zk_servers_noproto }}
+    ports: 80:80,8000:8000
   tags:
     - docker
     - docker_build
