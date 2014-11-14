@@ -61,3 +61,19 @@ curl -X POST -H "Content-Type: application/json" http://100.0.10.11:8080/v2/apps
 ```
 
 You can monitor and scale the instance by going to the Marathon web interface linked above. 
+
+# Using Spark
+
+Load up the spark-shell using 
+```
+/home/spark/spark/bin/spark-shell --master mesos://mesos-master1:5050,mesos-master2:5050,mesos-master3:5050 --executor-memory 128M
+```
+And execute a simple script
+```
+sc.parallelize(1 to 10).count()
+```
+
+Go to http://mesos-master3:5050/#/frameworks
+and see the workers in action
+
+There should also be a Spark UI at http://mesos-master3:4040
