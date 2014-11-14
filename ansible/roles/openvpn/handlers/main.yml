@@ -1,3 +1,0 @@
----
-- name: Restart openvpn
-  service: name=openvpn state=restarted enabled=yes
