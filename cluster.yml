@@ -42,7 +42,7 @@
     - { role: zookeeper, tags: [ 'zookeeper' ] }
     - { role: mesosphere, tags: [ 'mesos' ], mesos_mode: master }
     - { role: marathon, tags: [ 'marathon'] }
-    #- { role: ansible-chronos, tags: [ 'chronos'] }
+    - { role: chronos, tags: [ 'chronos'] }
 
 # Mesos slaves
 - hosts: mesos-slaves
@@ -54,6 +54,7 @@
         containerizers: "docker,mesos"
         executor_registration_timeout: 5mins
     - zk_servers_noproto: "{{ groups['mesos-masters'] | join(':2181,') }}:2181"
+    #- bamboo_env: "BAMBOO_ZK_HOST={{ groups['mesos-masters'] | join(':2181,') }}:2181"
 
   roles:
     - { role: mesosphere, tags: [ 'mesos' ], mesos_mode: slave }

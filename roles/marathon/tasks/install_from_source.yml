@@ -21,7 +21,7 @@
        dest={{marathon_bin_folder}}
        version={{marathon_version}}
 
-- name: Check wheter a jar is already built in the current src folder
+- name: Check whether a jar is already built in the current src folder
   command: find {{marathon_bin_folder}}/target -name 'marathon-assembly-*.jar'
   register: marathon_src_jars
   changed_when: False

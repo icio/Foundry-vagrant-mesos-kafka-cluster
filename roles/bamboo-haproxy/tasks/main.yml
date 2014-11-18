@@ -1,9 +1,22 @@
 ---
+
+# - include: haproxy.yml
+
 - name: install docker-py
   pip: name=docker-py version=0.3.1
 # Build and prepare bamboo image
+
+
 - name: Build bamboo image
-  docker: image="thefactory/bamboo" command=-bind=":8000" name="bamboo" env="BAMBOO_ZK_HOST={{ zk_servers_noproto }}" ports="80:80,8000:8000"
+  docker: 
+    image: "thefactory/bamboo"
+    command: "-bind=':8000'" 
+    name: "bamboo"
+    ports: "80:80,8000:8000"
+    env: BAMBOO_ZK_HOST=$(BAMBOO_ZK_HOST) MARATHON_ENDPOINT=$(MARATHON_ENDPOINT)
+  environment:
+    BAMBOO_ZK_HOST: "{{zk_servers_noproto}}"
+    MARATHON_ENDPOINT: "http://{{ groups['mesos-masters'] | join(':8080,') }}:8080"
   tags:
     - docker
     - docker_build
