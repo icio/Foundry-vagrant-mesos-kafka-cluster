@@ -55,11 +55,12 @@
         containerizers: "docker,mesos"
         executor_registration_timeout: 5mins
     - zk_servers_noproto: "{{ groups['mesos-masters'] | join(':2181,') }}:2181"
+    #- bamboo_env: "BAMBOO_ZK_HOST={{ groups['mesos-masters'] | join(':2181,') }}:2181"
 
   roles:
     - { role: mesosphere, tags: [ 'mesos' ], mesos_mode: slave }
     - { role: marathon, tags: [ 'marathon'], marathon_run_mode: bridge }
-    - { role: bamboo-haproxy, tags: [ 'bamboo'] }
+    #- { role: bamboo-haproxy, tags: [ 'bamboo'] }
 
 # Kafka
 - hosts: kafka-nodes
