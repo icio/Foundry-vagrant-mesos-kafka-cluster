@@ -30,7 +30,7 @@ Bamboo handles service discovery and reconfigures HAProxy. See usage instruction
 # Deploying Docker containers
 
 After provisioning the servers you can access Marathon here:
-http://100.0.10.11:8080/ and the master itself here: http://100.0.10.11:5050/
+http://100.0.10.11:8080/ and the master itself here: http://100.0.10.11:5050/ and http://mesos-master1:8081 for Chronos.
 
 Submitting a Docker container to run on the cluster is done by making a call to
 Marathon's REST API:
