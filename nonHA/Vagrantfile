@@ -2,7 +2,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 base_dir = File.expand_path(File.dirname(__FILE__))
 cluster = {
-  "mesos-master" => { :ip => "100.0.10.11",  :cpus => 1, :mem => 768 },
+  "mesos-master" => { :ip => "100.0.10.11",  :cpus => 1, :mem => 1536 },
   "mesos-slave"  => { :ip => "100.0.10.101", :cpus => 1, :mem => 1536 },
   # "kafka-node1"   => { :ip => "100.0.20.101", :cpus => 1, :mem => 1536 },
 }
