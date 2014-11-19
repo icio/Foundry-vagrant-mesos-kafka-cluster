@@ -1,6 +1,6 @@
 ---
 - name: Add haproxy apt repo
-  apt_repository: repo='ppa:vbernat/haproxy-1.5' update_cache=yes state=present
+  apt_repository: repo='ppa:vbernat/haproxy-1.5' update_cache=yes state=present validate_certs=no
 
 - name: Install the required packages
   apt: pkg=haproxy state=installed

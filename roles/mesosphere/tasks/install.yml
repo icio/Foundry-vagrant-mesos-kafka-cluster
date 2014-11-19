@@ -5,9 +5,10 @@
     - openjdk-7-jre-headless
 
 - name: create mesosphere repo
-  apt_repository: repo='{{ item }}' state=present
-  with_items:
-  - "deb http://repos.mesosphere.io/ubuntu trusty main"
+  apt_repository: repo='deb http://repos.mesosphere.io/ubuntu trusty main' state=present
+
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=3600
 
 - file: path=/opt/src state=directory recurse=yes
 

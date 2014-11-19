@@ -18,7 +18,7 @@
   notify: Restart bamboo
 
 - Build bamboo
-  command: go build bamboo.go
+  command: go build bamboo.go creates={{hadiscovery_bin_folder}}/bin/mesos_service_discovery
   notify: Restart bamboo
   args:
     chdir: "{{ bamboo_bin_folder }}"
@@ -27,7 +27,7 @@
   command: ./build.sh creates={{hadiscovery_bin_folder}}/bin/mesos_service_discovery
   notify: Restart hadiscovery
   args:
-    chdir: "{{hadiscovery_bin_folder}}"
+    chdir: "{{bamboo_bin_folder}}"
 
 - name: hadiscovery upstart script
   template: src=hadiscovery.conf.j2 dest=/etc/init/hadiscovery.conf
