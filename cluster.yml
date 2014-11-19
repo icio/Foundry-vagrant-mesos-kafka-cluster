@@ -134,3 +134,4 @@
   sudo: yes
   roles:
   - { role: spark-master }
+  - { role: spark-job-server}
