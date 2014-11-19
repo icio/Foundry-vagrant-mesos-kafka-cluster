@@ -49,5 +49,5 @@ export SPARK_LOG_DIR=/var/log/spark
 
 
 export MESOS_NATIVE_LIBRARY=/usr/local/lib/libmesos.so
-export SPARK_EXECUTOR_URI=hdfs://{{ groups['cdh5-namenode-backup'][0] }}/tmp/spark.tgz
+export SPARK_EXECUTOR_URI={{ spark_location }}
 export MASTER={{ zk_endpoint }}/mesos

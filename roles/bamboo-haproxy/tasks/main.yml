@@ -13,10 +13,7 @@
     command: "-bind=':8000'" 
     name: "bamboo"
     ports: "80:80,8000:8000"
-    env: BAMBOO_ZK_HOST=$(BAMBOO_ZK_HOST) MARATHON_ENDPOINT=$(MARATHON_ENDPOINT)
-  environment:
-    BAMBOO_ZK_HOST: "{{zk_servers_noproto}}"
-    MARATHON_ENDPOINT: "http://{{ groups['mesos-masters'] | join(':8080,') }}:8080"
+    env: BAMBOO_ZK_HOST={{zk_servers_noproto}} MARATHON_ENDPOINT={{ marathon_masters }}
   tags:
     - docker
     - docker_build

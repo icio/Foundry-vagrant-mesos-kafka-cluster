@@ -9,4 +9,4 @@
   when: marathon_run_mode == "server"
 
 - include: bridge.yml
-  when: marathon_run_mode == "bridge"
+  when: marathon_run_mode == "bridge" and discovery_method == "default"

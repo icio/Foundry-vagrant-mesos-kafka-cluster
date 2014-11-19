@@ -10,7 +10,7 @@
 # This task is not able to remove already existing config files
 - name: Set mesos slave options
   template: src=etc.mesos.j2 dest=/etc/mesos-slave/{{item.key}}
-  with_dict: mesos_options_slave | default({}) # with_dict needs explicit default
+  with_dict: "{{ mesos_options_slave | default({}) }}" # with_dict needs explicit default
   notify: Restart mesos-slave
 
 - name: Set mesos slave hostname to its IP
