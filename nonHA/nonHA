@@ -38,6 +38,9 @@ cdh5-namenode-backup
 [cdh5-journalnode]
 mesos-slave
 
+[cdh5-jobtracker:children]
+cdh5-namenode-primary
+
 [cdh5-datanodes:children]
 mesos-slaves
 
