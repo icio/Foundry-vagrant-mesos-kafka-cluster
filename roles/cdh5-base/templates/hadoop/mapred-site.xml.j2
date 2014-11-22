@@ -25,15 +25,6 @@
   </property>
 
   <!--  the most important properties for jobhistory -->
-  <property>
-    <name>mapreduce.jobhistory.address</name>
-    <value>{{ groups['cdh5-resourcemanager'] | join() }}:10020</value>
-  </property>
-  <property>
-    <name>mapreduce.jobhistory.webapp.address</name>
-    <value>{{ groups['cdh5-resourcemanager'] | join() }}:19888</value>
-  </property>
-
   <!-- YARN requires a staging directory for temporary files created by running jobs -->
   <property>
     <name>yarn.app.mapreduce.am.staging-dir</name>
@@ -65,6 +56,27 @@
   <property>
     <name>dfs.namenode.handler.count</name>
     <value>{{ dfs_namenode_handler_count }}</value>
+  </property>
+
+  <property>
+    <name>mapred.job.tracker</name>
+    <value>{{ groups['cdh5-jobtracker'][0] }}:8021</value>
+  </property>
+  <property>
+    <name>mapred.jobtracker.taskScheduler</name>
+    <value>org.apache.hadoop.mapred.MesosScheduler</value>
+  </property>
+  <property>
+    <name>mapred.mesos.taskScheduler</name>
+    <value>org.apache.hadoop.mapred.JobQueueTaskScheduler</value>
+  </property>
+  <property>
+    <name>mapred.mesos.master</name>
+    <value>{{ groups['mesos-masters'] | join(':5050,') }}:5050</value>
+  </property>
+  <property>
+    <name>mapred.mesos.executor.uri</name>
+    <value>hdfs://{{ groups['cdh5-namenode'][0] }}/hadoop-2.3.0-cdh5.1.3.tar.gz</value>
   </property>
 
 </configuration>

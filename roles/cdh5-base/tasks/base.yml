@@ -29,7 +29,9 @@
   apt: name={{ item }}={{ version['hadoop'] }} state=present force=yes
   with_items:
   - hadoop
+  - hadoop-mapreduce
   - hadoop-hdfs
+  - hadoop-0.20-mapreduce
   tags:
   - cdh5-base
 
@@ -107,7 +109,7 @@
   with_items:
   - core-site.xml
   - hdfs-site.xml
-  #- mapred-site.xml
+  - mapred-site.xml
   - slaves
   #- capacity-scheduler.xml
   #- configuration.xsl
