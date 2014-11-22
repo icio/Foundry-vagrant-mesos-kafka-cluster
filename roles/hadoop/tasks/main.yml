@@ -1,0 +1,66 @@
+---
+
+- name: Clone mesos-hadoop repo
+  git: 
+    repo: https://github.com/mesos/hadoop
+    dest: /opt/src/mesos-hadoop/
+    version: master
+
+- name: Install the required packages
+  apt: pkg=maven state=installed force=yes
+
+- name: package mesos-hadoop creates=/opt/src/mesos-hadoop/target/hadoop-mesos-0.0.8.jar
+  command: mvn package
+  args:
+    chdir: /opt/src/mesos-hadoop/
+
+- name: move mesos-hadoop package
+  command: cp target/hadoop-mesos-0.0.8.jar /usr/lib/hadoop-0.20-mapreduce/lib
+  args:
+    chdir: /opt/src/mesos-hadoop/
+
+- name: create hadoop.sh file
+  template: src=hadoop.sh.j2 dest=/etc/profile.d/hadoop.sh
+
+- name: download CDH5 distro
+  get_url: 
+    url: http://archive.cloudera.com/cdh5/cdh/5/{{ CDH5_HADOOP_DISTRO }}.tar.gz
+    dest: /opt/src/{{ CDH5_HADOOP_DISTRO }}.tar.gz
+
+- name: unpack CDH5 distro
+  command: tar -zxvf {{ CDH5_HADOOP_DISTRO }}.tar.gz
+  args:
+    chdir: /opt/src/
+
+- name: copy hadoop-mesos over
+  command: cp /opt/src/mesos-hadoop/target/hadoop-mesos-0.0.8.jar /usr/lib/hadoop-0.20-mapreduce/lib
+
+- name: set symlinks
+  command: "{{ item }}"
+  shell:
+  - cd /opt/src/{{ CDH5_HADOOP_DISTRO }}
+  - mv bin bin-mapreduce2
+  - mv examples examples-mapreduce2 
+  - ln -s bin-mapreduce1 bin
+  - ln -s examples-mapreduce1 examples
+  - pushd etc
+  - mv hadoop hadoop-mapreduce2
+  - ln -s hadoop-mapreduce1 hadoop
+  - popd
+  - pushd share/hadoop
+  - rm mapreduce
+  - ln -s mapreduce1 mapreduce
+  - popd
+
+- name: put hadoop distro into hdfs
+  shell: hadoop fs -put {{ CDH5_HADOOP_DISTRO }}-i.tar.gz /{{ CDH5_HADOOP_DISTRO }}.tar.gz
+
+- name: copy hadoop-dameon.sh file template
+  template: 
+    src: hadoop-daemon.sh.j2
+    dest: /usr/lib/hadoop-0.20-mapreduce/bin/hadoop-daemon.sh
+
+- name: start jobtracker service
+  service: name=hadoop-0.20-mapreduce-jobtracker state=restarted
+  tags:
+  - cdh5-jobtracker
