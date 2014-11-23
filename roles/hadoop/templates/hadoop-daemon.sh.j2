@@ -89,7 +89,10 @@ export HADOOP_SECURITY_LOGGER="INFO,DRFAS"
 export _HADOOP_DAEMON_OUT=$HADOOP_LOG_DIR/hadoop-$HADOOP_IDENT_STRING-$command-$HOSTNAME.out
 export _HADOOP_DAEMON_PIDFILE=$HADOOP_PID_DIR/hadoop-$HADOOP_IDENT_STRING-$command.pid
 export _HADOOP_DAEMON_DETACHED="true"
+export MESOS_HOME=/usr/local/lib/libmesos.so
 export MESOS_NATIVE_LIBRARY=/usr/local/lib/libmesos.so
+export MESOS_NATIVE_JAVA_LIBRARY=/usr/local/lib/libmesos.so
+#export MESOS_NATIVE_LIBRARY=$(find -L "$MESOS_HOME" -name libmesos.dylib -or -name libmesos.so | head -n1)
 
 # Set default scheduling priority
 if [ "$HADOOP_NICENESS" = "" ]; then

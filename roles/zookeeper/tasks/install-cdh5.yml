@@ -1,6 +1,6 @@
 ---
 - name: install zookeeper server pkgs
-  apt: name={{ item }}={{ version['zookeeper'] }} state=present force=yes
+  apt: name={{ item }}={{ version['zookeeper'] }} state=present force=yes update_cache=yes
   with_items:
   - zookeeper-server
   tags:

@@ -36,31 +36,29 @@
   command: cp /opt/src/mesos-hadoop/target/hadoop-mesos-0.0.8.jar /usr/lib/hadoop-0.20-mapreduce/lib
 
 - name: set symlinks
-  command: "{{ item }}"
-  shell:
-  - cd /opt/src/{{ CDH5_HADOOP_DISTRO }}
-  - mv bin bin-mapreduce2
-  - mv examples examples-mapreduce2 
-  - ln -s bin-mapreduce1 bin
-  - ln -s examples-mapreduce1 examples
-  - pushd etc
-  - mv hadoop hadoop-mapreduce2
-  - ln -s hadoop-mapreduce1 hadoop
-  - popd
-  - pushd share/hadoop
-  - rm mapreduce
-  - ln -s mapreduce1 mapreduce
-  - popd
+  shell: "{{ item.cmd }} {{ item.dest }}" 
+  with_items:
+  - { cmd: "mv /opt/src/{{ CDH5_HADOOP_DISTRO }}/bin", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/bin-mapreduce2" }
+  - { cmd: "mv /opt/src/{{ CDH5_HADOOP_DISTRO }}/examples", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/examples-mapreduce2" }
+  - { cmd: "ln -s /opt/src/{{ CDH5_HADOOP_DISTRO }}/bin-mapreduce1", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/bin" }
+  - { cmd: "ln -s /opt/src/{{ CDH5_HADOOP_DISTRO }}/examples-mapreduce1", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/examples" }
+  - { cmd: "mv /opt/src/{{ CDH5_HADOOP_DISTRO }}/etc/hadoop", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/etc/hadoop-mapreduce2" }
+  - { cmd: "ln -s /opt/src/{{ CDH5_HADOOP_DISTRO }}/etc/hadoop-mapreduce1", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/etc/hadoop" }
+  - { cmd: "rm /opt/src/{{ CDH5_HADOOP_DISTRO }}/share/hadoop/mapreduce && ln -s /opt/src/{{ CDH5_HADOOP_DISTRO }}/share/hadoop/mapreduce1", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/share/hadoop/mapreduce" }
+  args:
+    creates: "{{item.dest}}"
 
 - name: put hadoop distro into hdfs
-  shell: hadoop fs -put {{ CDH5_HADOOP_DISTRO }}-i.tar.gz /{{ CDH5_HADOOP_DISTRO }}.tar.gz
+  shell: hadoop fs -put /opt/src/{{ CDH5_HADOOP_DISTRO }}.tar.gz /{{ CDH5_HADOOP_DISTRO }}-i.tar.gz && touch /var/hadoop/.status/distro_tarball.created 
+  args:
+    creates: /var/hadoop/.status/distro_tarball.created
 
 - name: copy hadoop-dameon.sh file template
   template: 
     src: hadoop-daemon.sh.j2
     dest: /usr/lib/hadoop-0.20-mapreduce/bin/hadoop-daemon.sh
 
-- name: start jobtracker service
+- name: restart jobtracker service
   service: name=hadoop-0.20-mapreduce-jobtracker state=restarted
   tags:
   - cdh5-jobtracker
