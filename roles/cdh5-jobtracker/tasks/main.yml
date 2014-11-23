@@ -6,7 +6,7 @@
   tags:
   - cdh5-jobtracker
 
-- name: start jobtracker service
-  service: name=hadoop-0.20-mapreduce-jobtracker state=started
-  tags:
-  - cdh5-jobtracker
+# - name: start jobtracker service
+#   service: name=hadoop-0.20-mapreduce-jobtracker state=started
+#   tags:
+#   - cdh5-jobtracker
