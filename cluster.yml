@@ -119,6 +119,11 @@
   roles:
   - { role: cdh5-slave }
 
+- hosts: cdh5-jobtracker
+  sudo: yes
+  roles:
+  - cdh5-jobtracker
+
 - hosts: cdh5-namenode-primary
   sudo: yes
   tasks:
@@ -130,8 +135,26 @@
     - cdh5-namenode-primary
     - cdh5-namenode-primary-tmpdir
 
+# - hosts: cdh5-namenode-primary
+#   sudo: yes
+#   tasks:
+#   - name: create tmp directory
+#     shell: creates={{ item.dest }} sudo -u hdfs hadoop fs {{ item.command }} && touch {{ item.dest }}
+#     with_items:
+#     - { command: "-mkdir -p /var/lib/hadoop-hdfs/cache/mapred/mapred && sudo -u hdfs hadoop fs -chmod -R 1777 /var/lib/hadoop-hdfs/cache/mapred/mapred", dest:"/var/hadoop/.status/mapred.created" }
+#     - { command: "-chown -R mapred /var/lib/hadoop-hdfs/cache/mapred", dest:"/var/hadoop/.status/mapred-cache.created" }
+#     - { command: "-mkdir /tmp/mapred/system && sudo -u hdfs hadoop fs -chown mapred:hadoop /tmp/mapred/system", dest:"/var/hadoop/.status/mapred-system.created"}
+#     tags:
+#     - cdh5-namenode-primary
+
 - hosts: spark-masters
   sudo: yes
   roles:
   - { role: spark-master }
   - { role: spark-job-server}
+
+- hosts: cdh5-namenode-primary
+  sudo: yes
+  roles: 
+    - hadoop
+
