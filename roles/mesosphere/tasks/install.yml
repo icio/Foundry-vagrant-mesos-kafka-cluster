@@ -26,6 +26,13 @@
   notify: Restart mesos
   when: mesos_version != mesos_installed_version.stdout
 
+# - name: install mesos pkgs
+#   apt: name={{ item }} state=present force=yes
+#   with_items:
+#   - mesos={{ mesos_apt_version }}
+#   tags:
+#   - mesos-master
+
 - name: Download mesos python bindings (egg file)
   get_url: url={{mesos_python_download_url}} dest=/opt/src/{{mesos_python_file_name}}
 
