@@ -36,7 +36,7 @@
   - cdh5-base
 
 - name: install hadoop lzo pkgs
-  apt: name={{ item }} state=present force=yes
+  apt: name={{ item }}={{ version['lzo'] }} state=present force=yes
   with_items:
   - hadoop-lzo
   tags:
