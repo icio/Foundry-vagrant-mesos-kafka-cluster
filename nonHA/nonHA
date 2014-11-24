@@ -6,6 +6,7 @@ mesos-master zookeeper_myid=1
 
 [mesos-slaves]
 mesos-slave
+#mesos-slave2
 
 [spark-masters]
 mesos-master
