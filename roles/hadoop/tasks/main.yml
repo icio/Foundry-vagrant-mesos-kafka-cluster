@@ -15,12 +15,13 @@
     chdir: /opt/src/mesos-hadoop/
 
 - name: move mesos-hadoop package
-  command: cp target/hadoop-mesos-0.0.8.jar /usr/lib/hadoop-0.20-mapreduce/lib
-  args:
-    chdir: /opt/src/mesos-hadoop/
+  command: cp /opt/src/mesos-hadoop/target/hadoop-mesos-0.0.8.jar /usr/lib/hadoop-0.20-mapreduce/lib
 
 - name: create hadoop.sh file
   template: src=hadoop.sh.j2 dest=/etc/profile.d/hadoop.sh
+
+- name: change permissions on hadoop.sh
+  command: chmod +x /etc/profile.d/hadoop.sh
 
 - name: download CDH5 distro
   get_url: 
@@ -32,8 +33,11 @@
   args:
     chdir: /opt/src/
 
-- name: copy hadoop-mesos over
-  command: cp /opt/src/mesos-hadoop/target/hadoop-mesos-0.0.8.jar /usr/lib/hadoop-0.20-mapreduce/lib
+# - name: copy hadoop-mesos over
+#   command: cp /opt/src/mesos-hadoop/target/hadoop-mesos-0.0.8.jar /usr/lib/hadoop-0.20-mapreduce/lib
+
+- name: copy hadoop-mesos into cdh5
+  command: cp /opt/src/mesos-hadoop/target/hadoop-mesos-0.0.8.jar /opt/src/{{ CDH5_HADOOP_DISTRO }}/share/hadoop/common/lib/
 
 - name: set symlinks
   shell: "{{ item.cmd }} {{ item.dest }}" 
@@ -48,8 +52,14 @@
   args:
     creates: "{{item.dest}}"
 
+- name: compress cdh5 archive
+  command: tar czf {{ CDH5_HADOOP_DISTRO }}-i.tar.gz {{ CDH5_HADOOP_DISTRO }}
+  args:
+    chdir: /opt/src/
+    creates: "{{ CDH5_HADOOP_DISTRO }}-i.tar.gz"
+
 - name: put hadoop distro into hdfs
-  shell: hadoop fs -put /opt/src/{{ CDH5_HADOOP_DISTRO }}.tar.gz /{{ CDH5_HADOOP_DISTRO }}-i.tar.gz && touch /var/hadoop/.status/distro_tarball.created 
+  shell: hadoop fs -put /opt/src/{{ CDH5_HADOOP_DISTRO }}-i.tar.gz /{{ CDH5_HADOOP_DISTRO }}-i.tar.gz && touch /var/hadoop/.status/distro_tarball.created 
   args:
     creates: /var/hadoop/.status/distro_tarball.created
 
