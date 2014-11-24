@@ -27,6 +27,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     }
   end # end if
 
+  # manage /etc/hosts on boxes and host
+  # ( requires vagrant-hostmanager plugin)
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
+  config.hostmanager.include_offline = true
+
   cluster.each_with_index do |(hostname, info), index|
     config.vm.define hostname do |cfg|
 
@@ -40,10 +46,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.customize ["modifyvm", :id, "--memory", info[:mem], "--cpus", info[:cpus], "--hwvirtex", "on" ]
       end # end cfg.vm.provider
 
-      cfg.vm.provision :hosts do |provisioner|
-        provisioner.autoconfigure = true
-        provisioner.add_host :ip, [hostname]
-      end
       # provision nodes with ansible
       if index == cluster.size - 1
         cfg.vm.provision :ansible do |ansible|
