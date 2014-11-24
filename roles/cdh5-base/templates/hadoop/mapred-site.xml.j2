@@ -18,21 +18,22 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 
 <configuration>
-  <!-- If you plan on running YARN, you must set this property to the value of yarn -->
-  <property>
-    <name>mapreduce.framework.name</name>
-    <value>classic</value>
-  </property>
 
-  <!--  the most important properties for jobhistory -->
-  <!-- YARN requires a staging directory for temporary files created by running jobs -->
+  <property>
+    <name>mapred.mesos.master</name>
+    <value>zk://{{ groups['mesos-masters'] | join(':2181,') }}:2181/mesos</value>
+  </property>
 <!--   <property>
-    <name>yarn.app.mapreduce.am.staging-dir</name>
-    <value>/user</value>
+    <name>mapred.mesos.executor.uri</name>
+    <value>hdfs://{{ groups['cdh5-namenode'][0] }}/hadoop-2.5.0-cdh5.2.0-i.tar.gz</value>
   </property> -->
 
-  <!-- Fix the issue about memory limits -->
   <property>
+    <name>mapred.mesos.executor.uri</name>
+    <value>file://vagrant/hadoop-2.5.0-cdh5.2.0-i.tar.gz</value>
+  </property>
+  <!-- Fix the issue about memory limits -->
+<!--   <property>
     <name>mapreduce.map.memory.mb</name>
     <value>{{ mapreduce_map_memory_mb }}</value>
   </property>
@@ -48,7 +49,7 @@
     <name>mapreduce.reduce.java.opts</name>
     <value>{{ mapreduce_reduce_java_opts }}</value>
   </property>
-
+ -->
   <property>
     <name>mapreduce.jobtracker.handler.count</name>
     <value>{{ mapreduce_jobtracker_handler_count }}</value>
@@ -73,14 +74,6 @@
   <property>
     <name>mapred.mesos.taskScheduler</name>
     <value>org.apache.hadoop.mapred.JobQueueTaskScheduler</value>
-  </property>
-  <property>
-    <name>mapred.mesos.master</name>
-    <value>{{ groups['mesos-masters'] | join(':5050,') }}:5050</value>
-  </property>
-  <property>
-    <name>mapred.mesos.executor.uri</name>
-    <value>hdfs://{{ groups['cdh5-namenode'][0] }}/hadoop-2.3.0-cdh5.1.3.tar.gz</value>
   </property>
 
   <!-- The properties below indicate the amount of resources that are allocated
@@ -137,9 +130,7 @@
     <name>mapred.tasktracker.reduce.tasks.maximum</name>
     <value>50</value>
     <description>
-      This is the maximum number of tasks per task tracker. If you use the
-      fixed resource policy, Mesos will always allocate this many slots per
-      task tracker.
+      This is the maximum number of tasks per task tracker. If you use the fixed resource policy, Mesos will always allocate this many slots per task tracker.
     </description>
   </property>
   <property>
@@ -148,8 +139,7 @@
     <description>
       If this is set to true, Mesos will always allocate a fixed number of
       slots per task tracker based on the maximum map/reduce slot
-      specification. If a resource offer is not large enough for the number of
-      slots specified, that resource offer will be declined.
+      specification. If a resource offer is not large enough for the number of slots specified, that resource offer will be declined.
     </description>
   </property>
 
@@ -165,16 +155,14 @@
     <name>mapred.mesos.role</name>
     <value>*</value>
     <description>
-      This is the Mesos framework role. This can be used in conjunction with
-      Mesos reservations. Consult the Mesos documentation for details.
+      This is the Mesos framework role. This can be used in conjunction with Mesos reservations. Consult the Mesos documentation for details.
     </description>
   </property>
   <property>
     <name>mapred.mesos.role.strict</name>
     <value>false</value>
     <description>
-      Force the framework to only ever accept resource offers that are of the
-      role configured in "mapred.mesos.role".
+      Force the framework to only ever accept resource offers that are of the role configured in "mapred.mesos.role".
     </description>
   </property>
 
