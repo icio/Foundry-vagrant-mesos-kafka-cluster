@@ -9,9 +9,9 @@ For Kafka and Bamboo, just uncomment the Kafka VM in the Vagrantfile and Invento
 
 # Usage
 
-Make sure you have the Vagrant-Hosts plugin installed
+Make sure you have the vagrant-hostmanager plugin installed
 ```
-vagrant plugin install vagrant-hosts
+vagrant plugin install vagrant-hostmanager
 ```
 
 Clone the repository, and run:
