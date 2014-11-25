@@ -14,7 +14,7 @@
   - cdh5-zookeeperserver
 
 - name: init zookeeper server
-  shell: service zookeeper-server init --myid={{ zookeeper_myid }}  creates={{ zookeeper_datadir }}/myid
+  shell: service zookeeper-server init --myid={{ zookeeper_myid }} creates={{ zookeeper_datadir }}/myid
   tags:
   - cdh5-zookeeper
   - cdh5-zookeeperserver
