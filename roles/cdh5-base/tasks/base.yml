@@ -29,12 +29,14 @@
   apt: name={{ item }}={{ version['hadoop'] }} state=present force=yes
   with_items:
   - hadoop
+  - hadoop-mapreduce
   - hadoop-hdfs
+  - hadoop-0.20-mapreduce
   tags:
   - cdh5-base
 
 - name: install hadoop lzo pkgs
-  apt: name={{ item }} state=present force=yes
+  apt: name={{ item }}={{ version['lzo'] }} state=present force=yes
   with_items:
   - hadoop-lzo
   tags:
@@ -107,7 +109,7 @@
   with_items:
   - core-site.xml
   - hdfs-site.xml
-  #- mapred-site.xml
+  - mapred-site.xml
   - slaves
   #- capacity-scheduler.xml
   #- configuration.xsl
