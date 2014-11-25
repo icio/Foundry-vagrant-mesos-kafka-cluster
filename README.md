@@ -26,6 +26,8 @@ Marathon framework. The slave will come with HAProxy, Docker, and Bamboo install
 
 Bamboo handles service discovery and reconfigures HAProxy. See usage instructions here: https://github.com/QubitProducts/bamboo
 
+# Non-High Availability Mode
+There is also a vagrantfile for a normal 1 slave, 1 master setup (which will save a lot of time provisioning) in /nonHA
 
 # Deploying Docker containers
 
