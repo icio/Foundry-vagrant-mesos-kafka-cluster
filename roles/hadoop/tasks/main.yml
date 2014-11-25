@@ -33,8 +33,8 @@
   args:
     chdir: /opt/src/
 
-# - name: copy hadoop-mesos over
-#   command: cp /opt/src/mesos-hadoop/target/hadoop-mesos-0.0.8.jar /usr/lib/hadoop-0.20-mapreduce/lib
+- name: copy hadoop-mesos over
+  command: cp /opt/src/mesos-hadoop/target/hadoop-mesos-0.0.8.jar /usr/lib/hadoop-0.20-mapreduce/lib/
 
 - name: copy hadoop-mesos into cdh5
   command: cp /opt/src/mesos-hadoop/target/hadoop-mesos-0.0.8.jar /opt/src/{{ CDH5_HADOOP_DISTRO }}/share/hadoop/common/lib/
