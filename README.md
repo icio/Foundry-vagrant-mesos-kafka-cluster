@@ -107,3 +107,19 @@ curl mesos-master:8090/jobs/3d4ef63e-1222-41f1-ad43-164e0412a99b
 }
 ```
 
+# Hadoop Example
+
+Note: This will only work on a sufficiently large cluster. This may not be possible via VMs on your local machine.
+```
+su mapred
+export HADOOP_MAPRED_HOME=/usr/lib/hadoop-0.20-mapreduce
+export MESOS_NATIVE_LIBRARY=/usr/local/lib/libmesos.so
+echo "Hello World Bye World" > /tmp/file0
+echo "Hello Hadoop Goodbye Hadoop" > /tmp/file1
+hdfs dfs -mkdir -p /user/foo/data
+hdfs dfs -copyFromLocal /tmp/file? /user/foo/data
+hadoop jar /usr/lib/hadoop-0.20-mapreduce/hadoop-examples-2.5.0-mr1-cdh5.2.0.jar wordcount /user/foo/data /user/foo/out
+hdfs dfs -ls /user/foo/out
+hdfs dfs -cat /user/foo/out/part*
+```
+
