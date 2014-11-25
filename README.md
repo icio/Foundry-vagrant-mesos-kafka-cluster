@@ -114,6 +114,7 @@ Note: This will only work on a sufficiently large cluster. This may not be possi
 su mapred
 export HADOOP_MAPRED_HOME=/usr/lib/hadoop-0.20-mapreduce
 export MESOS_NATIVE_LIBRARY=/usr/local/lib/libmesos.so
+export MESOS_NATIVE_JAVA_LIBRARY=/usr/local/lib/libmesos.so
 echo "Hello World Bye World" > /tmp/file0
 echo "Hello Hadoop Goodbye Hadoop" > /tmp/file1
 hdfs dfs -mkdir -p /user/foo/data

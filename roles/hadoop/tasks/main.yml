@@ -14,9 +14,6 @@
   args:
     chdir: /opt/src/mesos-hadoop/
 
-- name: move mesos-hadoop package
-  command: cp /opt/src/mesos-hadoop/target/hadoop-mesos-0.0.8.jar /usr/lib/hadoop-0.20-mapreduce/lib
-
 - name: create hadoop.sh file
   template: src=hadoop.sh.j2 dest=/etc/profile.d/hadoop.sh
 
@@ -27,6 +24,9 @@
   get_url: 
     url: http://archive.cloudera.com/cdh5/cdh/5/{{ CDH5_HADOOP_DISTRO }}.tar.gz
     dest: /opt/src/{{ CDH5_HADOOP_DISTRO }}.tar.gz
+
+- name: remove cdh5 folder
+  command: removes=/opt/src/{{ CDH5_HADOOP_DISTRO }} rm -rf /opt/src/{{ CDH5_HADOOP_DISTRO }}
 
 - name: unpack CDH5 distro
   command: tar -zxvf {{ CDH5_HADOOP_DISTRO }}.tar.gz
@@ -44,13 +44,19 @@
   with_items:
   - { cmd: "mv /opt/src/{{ CDH5_HADOOP_DISTRO }}/bin", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/bin-mapreduce2" }
   - { cmd: "mv /opt/src/{{ CDH5_HADOOP_DISTRO }}/examples", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/examples-mapreduce2" }
-  - { cmd: "ln -s /opt/src/{{ CDH5_HADOOP_DISTRO }}/bin-mapreduce1", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/bin" }
-  - { cmd: "ln -s /opt/src/{{ CDH5_HADOOP_DISTRO }}/examples-mapreduce1", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/examples" }
+  - { cmd: "mv /opt/src/{{ CDH5_HADOOP_DISTRO }}/bin-mapreduce1", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/bin" }
+  - { cmd: "mv /opt/src/{{ CDH5_HADOOP_DISTRO }}/examples-mapreduce1", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/examples" }
   - { cmd: "mv /opt/src/{{ CDH5_HADOOP_DISTRO }}/etc/hadoop", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/etc/hadoop-mapreduce2" }
-  - { cmd: "ln -s /opt/src/{{ CDH5_HADOOP_DISTRO }}/etc/hadoop-mapreduce1", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/etc/hadoop" }
+  - { cmd: "mv /opt/src/{{ CDH5_HADOOP_DISTRO }}/etc/hadoop-mapreduce1", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/etc/hadoop" }
   - { cmd: "rm /opt/src/{{ CDH5_HADOOP_DISTRO }}/share/hadoop/mapreduce && ln -s /opt/src/{{ CDH5_HADOOP_DISTRO }}/share/hadoop/mapreduce1", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/share/hadoop/mapreduce" }
   args:
-    creates: "{{item.dest}}"
+    #creates: "{{item.dest}}"
+    chdir: /opt/src/
+
+
+
+# - name: set up repo
+#   shell: provision-cdh5.sh chdir=/opt/src/{{ CDH5_HADOOP_DISTRO }}
 
 - name: compress cdh5 archive
   command: tar czf {{ CDH5_HADOOP_DISTRO }}-i.tar.gz {{ CDH5_HADOOP_DISTRO }}
@@ -58,8 +64,8 @@
     chdir: /opt/src/
     creates: "{{ CDH5_HADOOP_DISTRO }}-i.tar.gz"
 
-- name: put hadoop distro into hdfs
-  shell: hadoop fs -put /opt/src/{{ CDH5_HADOOP_DISTRO }}-i.tar.gz /{{ CDH5_HADOOP_DISTRO }}-i.tar.gz && touch /var/hadoop/.status/distro_tarball.created 
+- name: copyFromLocal hadoop distro into hdfs
+  shell: sudo -u hdfs hadoop fs -copyFromLocal /opt/src/{{ CDH5_HADOOP_DISTRO }}-i.tar.gz /{{ CDH5_HADOOP_DISTRO }}-i.tar.gz && touch /var/hadoop/.status/distro_tarball.created
   args:
     creates: /var/hadoop/.status/distro_tarball.created
 

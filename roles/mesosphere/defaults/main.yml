@@ -1,5 +1,5 @@
 ---
-mesos_version: "0.20.1"
+mesos_version: "0.21.0"
 mesos_apt_version: "0.21.0-1.0.ubuntu1404"
 mesos_file_name: "mesos_{{mesos_version}}-1.0.ubuntu1404_amd64.deb"
 mesos_python_file_name: "mesos-{{mesos_version}}-py2.7-linux-x86_64.egg"
