@@ -1,8 +1,9 @@
 ---
-marathon_install_mode: "bin" # 'bin' or 'source'
+marathon_install_mode: "apt" # 'apt' or 'bin' or 'source'
 marathon_run_mode: "server" # 'server' or 'bridge'
 
 marathon_version: "0.7.5"
+marathon_apt_version: "0.7.5-1.0"
 marathon_file_name:  "marathon-{{marathon_version}}.tgz"
 marathon_download_url: "http://downloads.mesosphere.io/marathon/v{{marathon_version}}/{{marathon_file_name}}"
 
