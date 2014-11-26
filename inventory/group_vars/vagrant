@@ -75,10 +75,10 @@ yarn_nodemanager_pmem_check_enabled: 'true'
 yarn_nodemanager_vmem_check_enabled: 'true'
 
 # mapred-site_xml
-mapreduce_map_memory_mb: 4096
-mapreduce_reduce_memory_mb: 8192
-mapreduce_map_java_opts: '-Xmx3072m'
-mapreduce_reduce_java_opts: '-Xmx6144m'
+mapreduce_map_memory_mb: 128
+mapreduce_reduce_memory_mb: 128
+mapreduce_map_java_opts: '-Xmx512m'
+mapreduce_reduce_java_opts: '-Xmx512m'
 mapreduce_jobtracker_handler_count: 128
 dfs_namenode_handler_count: 128
 

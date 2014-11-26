@@ -4,16 +4,13 @@
   with_items:
     - openjdk-7-jre-headless
 
-- name: create mesosphere repo
-  apt_repository: repo='deb http://repos.mesosphere.io/ubuntu trusty main' state=present
-
 - name: Update apt cache
   apt: update_cache=yes cache_valid_time=3600
 
 - file: path=/opt/src state=directory recurse=yes
 
-- name: Download mesos
-  get_url: url={{mesos_download_url}} dest=/opt/src/{{mesos_file_name}}
+# - name: Download mesos
+#   get_url: url={{mesos_download_url}} dest=/opt/src/{{mesos_file_name}}
 
 - name: Check installed mesos version
   shell: mesos-master --version | cut -c 7-
@@ -21,10 +18,17 @@
   changed_when: False
   ignore_errors: True
 
-- name: Install Mesos Debian Package
-  shell: dpkg -i /opt/src/{{mesos_file_name}}
-  notify: Restart mesos
-  when: mesos_version != mesos_installed_version.stdout
+# - name: Install Mesos Debian Package
+#   shell: dpkg -i /opt/src/{{mesos_file_name}}
+#   notify: Restart mesos
+#   when: mesos_version != mesos_installed_version.stdout
+
+- name: install mesos pkgs
+  apt: name={{ item }} state=present force=yes
+  with_items:
+  - mesos={{ mesos_apt_version }}
+  tags:
+  - mesos-master
 
 - name: Download mesos python bindings (egg file)
   get_url: url={{mesos_python_download_url}} dest=/opt/src/{{mesos_python_file_name}}
