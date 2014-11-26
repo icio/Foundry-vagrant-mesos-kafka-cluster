@@ -50,13 +50,7 @@
   - { cmd: "mv /opt/src/{{ CDH5_HADOOP_DISTRO }}/etc/hadoop-mapreduce1", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/etc/hadoop" }
   - { cmd: "rm /opt/src/{{ CDH5_HADOOP_DISTRO }}/share/hadoop/mapreduce && ln -s /opt/src/{{ CDH5_HADOOP_DISTRO }}/share/hadoop/mapreduce1", dest: "/opt/src/{{ CDH5_HADOOP_DISTRO }}/share/hadoop/mapreduce" }
   args:
-    #creates: "{{item.dest}}"
     chdir: /opt/src/
-
-
-
-# - name: set up repo
-#   shell: provision-cdh5.sh chdir=/opt/src/{{ CDH5_HADOOP_DISTRO }}
 
 - name: compress cdh5 archive
   command: tar czf {{ CDH5_HADOOP_DISTRO }}-i.tar.gz {{ CDH5_HADOOP_DISTRO }}
