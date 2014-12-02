@@ -80,7 +80,12 @@ and see the workers in action
 
 There should also be a Spark UI at http://mesos-master3:4040
 
-There is a Spark Job Server Running at http://mesos-master:8090
+You can run a Spark Jobserver with the following: 
+```
+curl -X POST -H "Content-Type: application/json" http://100.0.10.11:8080/v2/apps -d@docker-payloads/spark-job-server-host.json
+```
+
+Spark Jobserver Running at http://mesos-master:8090
 ```
 curl --data-binary @job-server-tests/target/job-server-tests-0.4.2-SNAPSHOT.jar mesos-slave:8090/jars/test
 
