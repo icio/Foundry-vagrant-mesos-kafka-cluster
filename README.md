@@ -82,9 +82,9 @@ There should also be a Spark UI at http://mesos-master3:4040
 
 There is a Spark Job Server Running at http://mesos-master:8090
 ```
-curl --data-binary @job-server-tests/target/job-server-tests-0.4.2-SNAPSHOT.jar mesos-master:8090/jars/test
+curl --data-binary @job-server-tests/target/job-server-tests-0.4.2-SNAPSHOT.jar mesos-slave:8090/jars/test
 
-curl -d "input.string = a b c a b see" 'mesos-master:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExample'
+curl -d "input.string = a b c a b see" 'mesos-slave:8090/jobs?appName=test&classPath=spark.jobserver.WordCountExample'
 {
   "status": "STARTED",
   "result": {
