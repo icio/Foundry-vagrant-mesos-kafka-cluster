@@ -20,27 +20,26 @@ Clone the repository, and run:
 vagrant up
 ```
 
-This will provision a mini Mesos cluster with one master, three slaves, and one
-Kafka instance.  The Mesos master server also contains Zookeeper and the
-Marathon framework. The slave will come with HAProxy, Docker, and Bamboo installed.
+This will provision a mini Mesos cluster with one master, three slaves, and one Kafka instance.  The Mesos master server also contains Zookeeper and the Marathon framework. The slave will come with HAProxy, Docker, and Bamboo installed.
+
+After provisioning the servers you can access Marathon here:
+http://100.0.10.11:8080/ and the master itself here: http://100.0.10.11:5050/
 
 Bamboo handles service discovery and reconfigures HAProxy. See usage instructions here: https://github.com/QubitProducts/bamboo
 
 # Non-High Availability Mode
 There is also a vagrantfile for a normal 1 slave, 1 master setup (which will save a lot of time provisioning) in /nonHA
 
-# Deploying Docker containers
-
-After provisioning the servers you can access Marathon here:
-http://100.0.10.11:8080/ and the master itself here: http://100.0.10.11:5050/
 
 # Chronos
-You can register Chronos as a framework in a docker container with the following:
+You can register Chronos as a framework in a docker container with the following command:
 ```
 curl -X POST -H "Content-Type: application/json" http://100.0.10.11:8080/v2/apps -d@docker-payloads/chronos.json
 ```
 You can access the Chronos UI at http://mesos-slave:8081
 
+
+# Deploying Docker containers
 
 Submitting a Docker container to run on the cluster is done by making a call to
 Marathon's REST API:
