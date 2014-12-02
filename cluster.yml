@@ -151,10 +151,8 @@
   sudo: yes
   roles:
   - { role: spark-master }
-  #- { role: spark-job-server}
 
 - hosts: cdh5-namenode-primary
   sudo: yes
   roles: 
     - hadoop-mesos
-
