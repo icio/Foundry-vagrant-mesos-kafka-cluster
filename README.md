@@ -32,7 +32,15 @@ There is also a vagrantfile for a normal 1 slave, 1 master setup (which will sav
 # Deploying Docker containers
 
 After provisioning the servers you can access Marathon here:
-http://100.0.10.11:8080/ and the master itself here: http://100.0.10.11:5050/ and http://mesos-master1:8081 for Chronos.
+http://100.0.10.11:8080/ and the master itself here: http://100.0.10.11:5050/
+
+# Chronos
+You can register Chronos as a framework in a docker container with the following:
+```
+curl -X POST -H "Content-Type: application/json" http://100.0.10.11:8080/v2/apps -d@docker-payloads/chronos.json
+```
+You can access the Chronos UI at http://mesos-slave:8081
+
 
 Submitting a Docker container to run on the cluster is done by making a call to
 Marathon's REST API:

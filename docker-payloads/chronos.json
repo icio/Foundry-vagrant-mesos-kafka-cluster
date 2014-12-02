@@ -1,8 +1,8 @@
 {
     "id": "/chronos",
     "instances": 1,
-    "cpus": 0.5,
-    "mem": 512,
+    "cpus": 0.25,
+    "mem": 256,
     "shell": "false",
     "args": ["--master", "zk://100.0.10.11:2181/mesos", "--zk_hosts", "zk://100.0.10.11:2181"],
     "container": {
