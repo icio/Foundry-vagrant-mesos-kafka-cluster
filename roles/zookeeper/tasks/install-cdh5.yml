@@ -13,6 +13,9 @@
   - cdh5-zookeeper
   - cdh5-zookeeperserver
 
+- name: stop zookeeper
+  service: name=zookeeper-server state=stopped
+
 - name: init zookeeper server
   shell: service zookeeper-server init --myid={{ zookeeper_myid }} --force creates={{ zookeeper_datadir }}/myid
   tags:

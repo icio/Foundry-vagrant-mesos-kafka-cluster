@@ -1,5 +1,5 @@
 ---
-marathon_install_mode: "apt" # 'apt' or 'bin' or 'source'
+marathon_install_mode: "bin" # 'apt' or 'bin' or 'source'
 marathon_run_mode: "server" # 'server' or 'bridge'
 
 marathon_version: "0.7.5"
@@ -13,5 +13,5 @@ marathon_ip: "{{ansible_eth0.ipv4.address}}"
 marathon_port: 8080
 marathon_log_file: "/var/log/marathon.log"
 marathon_zk: "zk://localhost:2181/marathon"
-marathon_launch_timeout: 600000 # should be set to a time interval greater than mesos_options_slave.executor_registration_timeout
+marathon_launch_timeout: 1200000 # should be set to a time interval greater than mesos_options_slave.executor_registration_timeout
 marathon_runtime_params: ""
