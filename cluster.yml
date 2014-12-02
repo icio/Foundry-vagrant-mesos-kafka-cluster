@@ -52,7 +52,7 @@
   vars:
     - mesos_options_slave:
         containerizers: "docker,mesos"
-        executor_registration_timeout: 5mins
+        executor_registration_timeout: 20mins
     - zk_servers_noproto: "{{ groups['mesos-masters'] | join(':2181,') }}:2181"
     - marathon_masters: "http://{{ groups['mesos-masters'] | join(':8080,') }}:8080"
     - discovery_method: default
@@ -151,7 +151,7 @@
   sudo: yes
   roles:
   - { role: spark-master }
-  - { role: spark-job-server}
+  #- { role: spark-job-server}
 
 - hosts: cdh5-namenode-primary
   sudo: yes
