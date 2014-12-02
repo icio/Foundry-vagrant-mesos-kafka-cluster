@@ -16,7 +16,7 @@ version:
 spark_home: /home/spark/spark
 spark_build: spark-1.1.0-bin-cdh4
 spark_download_url: "http://d3kbcqa49mib13.cloudfront.net/{{spark_build}}.tgz"
-spark_location: hdfs://{{ groups['cdh5-namenode'][0] }}/tmp/spark.tgz
+spark_location: hdfs://{{ nameservice_id }}/tmp/spark.tgz
 spark_job_server_home: /home/spark/job-server
 job_server_version: 0.4.1
 ansible_path: "{{ lookup('env','ANSIBLE_WORK_DIR') }}"
