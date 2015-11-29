@@ -47,6 +47,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         vb.name = 'vagrant-mesos-' + hostname
         vb.customize ["modifyvm", :id, "--memory", info[:mem], "--cpus", info[:cpus], "--hwvirtex", "on" ]
+        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+        vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+        vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
       end # end cfg.vm.provider
 
       # provision nodes with ansible
