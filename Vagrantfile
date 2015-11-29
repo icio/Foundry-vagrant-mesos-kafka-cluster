@@ -13,6 +13,9 @@ cluster = {
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
+  # https://github.com/theclaymethod/Foundry-vagrant-mesos-kafka-cluster/issues/5
+  config.ssh.insert_key = false
+
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :box #:machine
     config.cache.enable :apt 
