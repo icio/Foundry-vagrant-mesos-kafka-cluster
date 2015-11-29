@@ -7,8 +7,8 @@
   - 'deb [arch=amd64] http://archive.cloudera.com/gplextras5/ubuntu/trusty/amd64/gplextras trusty-gplextras5 contrib'
   - 'deb-src http://archive.cloudera.com/gplextras5/ubuntu/trusty/amd64/gplextras trusty-gplextras5 contrib'
 
-# - name: add cloudera key
-#   apt_key: keyserver=http://archive.cloudera.com/cdh5/ubuntu/trusty/amd64/cdh/archive.key state=present id=47304010
+- name: add cloudera key
+  apt_key: url=https://archive.cloudera.com/cdh5/ubuntu/trusty/amd64/cdh/archive.key state=present
 
 # - name: install needed rpms for hadoop
 #   apt: name={{ item }} state=present force=yes
