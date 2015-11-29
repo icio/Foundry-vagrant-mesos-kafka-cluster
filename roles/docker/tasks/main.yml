@@ -12,7 +12,7 @@
     update_cache=yes
 
 - name: Install Docker
-  apt: pkg=lxc-docker state=installed update_cache=yes force=yes
+  apt: pkg=docker state=present update_cache=yes force=yes
 
 - name: install apt packages
   apt: "name='{{ item }}' state=present"
