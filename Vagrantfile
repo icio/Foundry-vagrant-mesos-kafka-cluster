@@ -55,7 +55,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # provision nodes with ansible
       if index == cluster.size - 1
         cfg.vm.provision :ansible do |ansible|
-          ansible.verbose = "v"
+          ansible.verbose = "vvvv"
 
           ansible.inventory_path = "inventory/vagrant"
           ansible.playbook = "cluster.yml"
