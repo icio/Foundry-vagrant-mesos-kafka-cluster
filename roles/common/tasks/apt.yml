@@ -2,6 +2,9 @@
 - name: create mesosphere repo
   apt_repository: repo='deb http://repos.mesosphere.io/ubuntu trusty main' state=present
 
+- name: Add mesosphere repo key
+  apt_key: keyserver=keyserver.ubuntu.com id=DF7D54CBE56151BF
+
 - name: Update apt cache
   apt: update_cache=yes cache_valid_time=3600
 
