@@ -21,7 +21,7 @@
     - python-pip
 
 - name: install docker-py
-  pip: name=docker-py version=0.3.1
+  pip: name=docker-py version=1.5.0
 # Build and prepare bamboo image
 
 
