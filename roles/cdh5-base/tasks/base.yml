@@ -10,14 +10,14 @@
 - name: add cloudera key
   apt_key: url=https://archive.cloudera.com/cdh5/ubuntu/trusty/amd64/cdh/archive.key state=present
 
-# - name: install needed rpms for hadoop
-#   apt: name={{ item }} state=present force=yes
-#   with_items:
-#   - gcc
-#   - gcc-c++
-#   - make
-#   tags:
-#   - cdh5-base
+- name: install needed rpms for hadoop
+  apt: name={{ item }} state=present force=yes
+  with_items:
+  - gcc
+  - g++
+  - make
+  tags:
+  - cdh5-base
 
 - name: create the hosts file for all machines
   template: src=hosts.j2 dest=/etc/hosts owner=root group=root mode=0644
